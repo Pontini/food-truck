@@ -20,9 +20,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "FoodTruck"
-include ':app'
-include ':chat'
-include ':chat:public'
-include ':chat:public-android'
-include ':chat:impl'
-include ':chat:impl-android'
+include(":app")
+include(":app:chat")
+include(":app:chat:public")
+include(":app:chat:impl")
+include(":app:chat:impl-android")
