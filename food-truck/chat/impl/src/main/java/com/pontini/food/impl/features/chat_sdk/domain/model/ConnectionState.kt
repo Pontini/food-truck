@@ -1,4 +1,4 @@
-package com.pontini.food.impl.domain.model
+package com.pontini.food.impl.features.chat_sdk.domain.model
 
 import com.pontini.food.domain.model.Message
 

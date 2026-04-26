@@ -8,7 +8,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pontini.food.android.manager.ChatManager
 import com.pontini.food.domain.model.Message
-import com.pontini.food.impl.domain.repoistories.ChatRepository
+import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

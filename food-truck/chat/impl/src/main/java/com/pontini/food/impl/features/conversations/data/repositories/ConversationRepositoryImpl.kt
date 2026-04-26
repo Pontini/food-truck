@@ -1,9 +1,9 @@
-package com.pontini.food.impl.data.repositories
+package com.pontini.food.impl.features.conversations.data.repositories
 
-import com.pontini.food.impl.data.datasource.ConversationLocalDataSource
+import com.pontini.food.impl.features.conversations.data.datasource.ConversationLocalDataSource
 import com.pontini.food.impl.data.datasource.ConversationRemoteDataSource
-import com.pontini.food.impl.domain.model.Conversation
-import com.pontini.food.impl.domain.repoistories.ConversationRepository
+import com.pontini.food.impl.features.conversations.domain.model.Conversation
+import com.pontini.food.impl.features.conversations.domain.repoistories.ConversationRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 

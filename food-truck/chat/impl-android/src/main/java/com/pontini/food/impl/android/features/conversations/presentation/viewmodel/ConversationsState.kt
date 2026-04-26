@@ -1,6 +1,7 @@
 package com.pontini.food.impl.android.features.conversations.presentation.viewmodel
 
-import com.pontini.food.impl.domain.model.Conversation
+import com.pontini.food.impl.features.conversations.domain.model.Conversation
+
 
 data class ConversationsState(
     val conversations: List<Conversation> = emptyList(),
