@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.presentation.viewmodel
+package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 sealed interface ChatIntent {
 

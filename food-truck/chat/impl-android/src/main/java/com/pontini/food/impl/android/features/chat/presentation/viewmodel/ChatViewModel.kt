@@ -1,9 +1,8 @@
-package com.pontini.food.impl.android.features.chat.viewmodel
+package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.pontini.food.android.manager.ChatManager
 import com.pontini.food.impl.android.core.presentation.viewmodel.BaseViewModel
-import com.pontini.food.impl.android.presentation.viewmodel.ChatIntent
 import com.pontini.food.impl.android.presentation.viewmodel.ChatState
 import kotlinx.coroutines.launch
 

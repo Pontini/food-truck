@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.pontini.food.impl.android.presentation.viewmodel.ChatIntent
-import com.pontini.food.impl.android.features.chat.viewmodel.ChatViewModel
+import com.pontini.food.impl.android.features.chat.presentation.viewmodel.ChatIntent
+import com.pontini.food.impl.android.features.chat.presentation.viewmodel.ChatViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

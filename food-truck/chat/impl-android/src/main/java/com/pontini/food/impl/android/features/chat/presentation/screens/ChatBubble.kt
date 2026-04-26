@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pontini.food.impl.android.features.chat.presentation.screens.Avatar
 
 
 @Composable
