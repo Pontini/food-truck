@@ -1,26 +1,18 @@
 package com.pontini.food.impl.android.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import androidx.lifecycle.viewModelScope
 import com.pontini.food.android.manager.ChatManager
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class ChatViewModel(
-    private val chatManager: ChatManager,
-) : ViewModel() {
-
-    private val _state = MutableStateFlow(ChatState())
-    val state: StateFlow<ChatState> = _state.asStateFlow()
+    private val chatManager: ChatManager
+) : BaseViewModel<ChatIntent, ChatState>(ChatState()) {
 
     init {
         observeMessages()
     }
 
-    fun onIntent(intent: ChatIntent) {
+    override fun dispatcher(intent: ChatIntent) {
         when (intent) {
             is ChatIntent.SendMessage -> sendMessage(intent.text)
             is ChatIntent.Connect -> connect()
@@ -28,9 +20,9 @@ class ChatViewModel(
     }
 
     private fun connect() {
+        setState { it.copy(isConnecting = true) }
 
-        _state.update { it.copy(isConnecting = true) }
-        _state.update {
+        setState {
             it.copy(
                 isConnecting = false,
                 isConnected = true
@@ -40,9 +32,15 @@ class ChatViewModel(
 
     private fun observeMessages() {
         viewModelScope.launch {
-            chatManager.observeMessages().collect{
-                println("📩 [ViewModel] Nova lista de mensagens (${it.size} msgs)")
-                println("➡️ Última: ${it.lastOrNull()?.text}")
+            chatManager.observeMessages().collect { list ->
+                println("📩 [ViewModel] Nova lista (${list.size} msgs)")
+                println("➡️ Última: ${list.lastOrNull()?.text}")
+
+                setState {
+                    it.copy(
+                        messages = list
+                    )
+                }
             }
         }
     }

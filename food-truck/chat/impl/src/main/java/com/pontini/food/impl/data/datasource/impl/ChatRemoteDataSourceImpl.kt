@@ -73,12 +73,9 @@ class ChatRemoteDataSourceImpl(
         }
 
         try {
-            println("📤 Enviando: $message")
-
             currentSession.send(Frame.Text(message))
 
         } catch (e: Exception) {
-            println("❌ Erro ao enviar: ${e.message}")
             e.printStackTrace()
 
             _events.emit(ConnectionState.Connection.Error("Erro ao enviar"))
