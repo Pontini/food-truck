@@ -1,6 +1,5 @@
 package com.pontini.food.foodtruck.presentation.navigation
 
-
 import HomeScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -24,10 +23,11 @@ fun AppNavHost(
         composable(HOME_ROUTE) {
             HomeScreen(
                 onNavigateToChat = {
-                    chatNavigator.openChat(navController)
+                    chatNavigator.openConversations(navController)
                 }
             )
         }
+
         chatNavigator.registerGraph(navController, this)
     }
 }

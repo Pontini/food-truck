@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id 'java-library'
     alias(libs.plugins.jetbrains.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 java {
@@ -21,4 +22,7 @@ dependencies {
     implementation(libs.ktor.client.core)
     implementation(libs.koin.core)
     implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.ktor.client.content.negotiation)
+    implementation(libs.ktor.ktor.serialization.kotlinx.json)
+    implementation(libs.jetbrains.kotlinx.serialization.json)
 }

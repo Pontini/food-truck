@@ -4,11 +4,9 @@ import com.pontini.food.domain.model.Message
 import com.pontini.food.impl.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.domain.repoistories.ChatRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.scan
 import com.pontini.food.impl.domain.model.ConnectionState
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.runningFold
@@ -36,12 +34,11 @@ class ChatRepositoryImpl(
                 }
             }
 
-            // 👇 log individual
             .onEach {
                 println("📩 [Repository] Mensagem: ${it.text} (${it.sender})")
             }
 
-            // 👇 acumula corretamente sem reset
+
             .runningFold(emptyList<Message>()) { acc, message ->
                 val updated = acc + message
 

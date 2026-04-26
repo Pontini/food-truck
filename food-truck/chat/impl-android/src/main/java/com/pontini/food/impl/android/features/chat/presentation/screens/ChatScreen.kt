@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.conversations.screens
+package com.pontini.food.impl.android.features.chat.presentation.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -11,17 +11,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.pontini.food.impl.android.conversations.screens.ChatBubble
+import com.pontini.food.impl.android.conversations.screens.ChatTopBar
 import com.pontini.food.impl.android.features.chat.presentation.viewmodel.ChatIntent
 import com.pontini.food.impl.android.features.chat.presentation.viewmodel.ChatViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ChatScreen(
+    conversationId: String,
     viewModel: ChatViewModel = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val listState = rememberLazyListState()
+
+    LaunchedEffect(conversationId) {
+        viewModel.dispatcher(ChatIntent.Connect(conversationId))
+    }
 
     LaunchedEffect(state.error) {
         state.error?.let {
@@ -67,7 +74,6 @@ fun ChatScreen(
                 }
             }
 
-            // ✍️ INPUT
             var text by remember { mutableStateOf("") }
 
             Row(
@@ -90,7 +96,9 @@ fun ChatScreen(
                 Button(
                     onClick = {
                         if (text.isNotBlank()) {
-                            viewModel.dispatcher(ChatIntent.SendMessage(text))
+                            viewModel.dispatcher(
+                                ChatIntent.SendMessage(text)
+                            )
                             text = ""
                         }
                     }
