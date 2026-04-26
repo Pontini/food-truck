@@ -32,7 +32,7 @@ class ChatViewModel(
 
     private fun observeMessages(conversationId: String) {
         viewModelScope.launch {
-            chatManager.observeMessages(conversationId).collect { list ->
+            chatManager.getMessagesById(conversationId).collect { list ->
                 setState {
                     it.copy(messages = list)
                 }
@@ -42,7 +42,7 @@ class ChatViewModel(
 
     private fun observeConnection() {
         viewModelScope.launch {
-            chatManager.observeConnection().collect { state ->
+            chatManager.getConnectionStatus().collect { state ->
                 when (state) {
                     is ConnectionState.Connection.Connecting -> {
                         setState {

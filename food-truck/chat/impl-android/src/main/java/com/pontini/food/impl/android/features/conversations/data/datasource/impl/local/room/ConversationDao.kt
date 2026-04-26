@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.features.conversations.data.model.room
+package com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.room
 
 
 import androidx.room.*

@@ -34,6 +34,12 @@ fun ConnectionBanner(status: ConnectionStatus) {
             "Sem conexão",
             Color.White
         )
+
+        ConnectionStatus.Connecting ->  Triple(
+            Color(0xFFF44336),
+            "Sem conexão",
+            Color.White
+        )
     }
 
     Box(

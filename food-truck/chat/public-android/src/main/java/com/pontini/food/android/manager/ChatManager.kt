@@ -6,6 +6,6 @@ import com.pontini.food.domain.model.Message
 
 interface ChatManager{
     suspend fun sendMessage(message: String,conversationId:String)
-    fun observeMessages(conversationId: String): Flow<List<Message>>
-    fun observeConnection(): Flow<ConnectionState>
+    fun getMessagesById(conversationId: String): Flow<List<Message>>
+    fun getConnectionStatus(): Flow<ConnectionState>
 }

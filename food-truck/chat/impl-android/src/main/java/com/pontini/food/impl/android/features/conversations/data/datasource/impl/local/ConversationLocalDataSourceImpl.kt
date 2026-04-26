@@ -2,7 +2,7 @@ package com.pontini.food.impl.android.features.conversations.data.datasource.imp
 
 import com.pontini.food.mapper.Mapper
 import com.pontini.food.mapper.mapList
-import com.pontini.food.impl.android.features.conversations.data.model.room.ConversationDao
+import com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.room.ConversationDao
 import com.pontini.food.impl.android.features.conversations.data.model.room.ConversationEntity
 import com.pontini.food.impl.features.conversations.data.datasource.ConversationLocalDataSource
 import com.pontini.food.impl.features.conversations.domain.model.Conversation

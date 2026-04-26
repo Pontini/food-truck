@@ -37,29 +37,51 @@ fun ConversationsScreen(
 
         Box(modifier = Modifier.weight(1f)) {
 
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(state.conversations, key = { it.id }) { conversation ->
-                    ConversationItem(
-                        conversation = conversation,
-                        onClick = { onOpenChat(conversation) }
+            when {
+                // 🔥 1. Loading inicial (sem dados)
+                state.isLoading && state.conversations.isEmpty() -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
                     )
+                }
+
+                // 🔥 2. Erro sem dados
+                state.error != null && state.conversations.isEmpty() -> {
+                    ErrorView(
+                        message = state.error ?: "Ocorreu um erro",
+                        onRetry = {
+                            viewModel.dispatcher(ConversationsIntent.Init)
+                        }
+                    )
+                }
+
+                // 🔥 3. Sem dados offline
+                state.conversations.isEmpty() -> {
+                    Text(
+                        text = "Sem dados offline",
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+
+                // 🔥 4. Lista (principal)
+                else -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        items(state.conversations, key = { it.id }) { conversation ->
+                            ConversationItem(
+                                conversation = conversation,
+                                onClick = { onOpenChat(conversation) }
+                            )
+                        }
+                    }
                 }
             }
 
-            if (state.isLoading && state.conversations.isEmpty()) {
+            // 🔥 5. Loading overlay (quando já tem dados)
+            if (state.isLoading && state.conversations.isNotEmpty()) {
                 CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-
-            if (state.error != null && state.conversations.isEmpty()) {
-                ErrorView(
-                    message = state.error ?: "Ocorreu um erro",
-                    onRetry = {
-
-                    }
+                    modifier = Modifier.align(Alignment.TopCenter)
                 )
             }
         }

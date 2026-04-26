@@ -2,7 +2,6 @@ package com.pontini.food.impl.features.chat_sdk.data.datasource.impl
 
 import com.pontini.food.domain.model.ConnectionState
 import com.pontini.food.domain.model.Message
-import com.pontini.food.domain.model.TypeMessage
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.mapper.Mapper
 import io.ktor.client.HttpClient
@@ -12,7 +11,6 @@ import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import java.util.UUID
 
 class ChatRemoteDataSourceImpl(
     private val client: HttpClient,
@@ -20,7 +18,7 @@ class ChatRemoteDataSourceImpl(
 ) : ChatRemoteDataSource {
 
     private val _events =
-        MutableSharedFlow<ConnectionState>(extraBufferCapacity = 64)
+        MutableSharedFlow<ConnectionState>()
 
     override val events: Flow<ConnectionState> = _events
 
@@ -39,67 +37,41 @@ class ChatRemoteDataSourceImpl(
                 session = this
                 _events.tryEmit(ConnectionState.Connection.Connected)
 
-                println("✅ WebSocket conectado e aguardando mensagens...")
-
                 while (true) {
                     val frame = incoming.receive()
-
                     val text = (frame as? Frame.Text)?.readText() ?: continue
-
-                    println("📩 Recebido: $text")
-
                     val message = webSocketDataToMessageMapper.map(text)
-
-                    val emitted = _events.tryEmit(
-                        ConnectionState.Data.MessageReceived(message)
-                    )
-
-                    if (!emitted) {
-                        println("⚠️ Evento descartado (buffer cheio)")
-                    }
+                    _events.tryEmit(ConnectionState.Data.MessageReceived(message))
                 }
             }
         } catch (e: Exception) {
             isConnected = false
-            println("❌ Conexão caiu: ${e.message}")
-
             _events.tryEmit(
                 ConnectionState.Connection.Error(e.message ?: "Erro")
             )
         }
     }
 
-    override suspend fun send(data: String, conversationId: String) {
-        val currentSession = session
-
-        if (currentSession == null) {
-            println("❌ Tentou enviar sem conexão ativa")
-            return
-        }
+    override suspend fun send(message: String, conversationId: String) {
+        val currentSession = requireSession() ?: return
 
         try {
-            currentSession.send(Frame.Text(data))
-
+            currentSession.send(Frame.Text(message))
         } catch (e: Exception) {
             e.printStackTrace()
-
             _events.tryEmit(
                 ConnectionState.Connection.Error("Erro ao enviar")
             )
         }
+    }
 
-        _events.tryEmit(
-            ConnectionState.Data.MessageSent(
-                Message(
-                    id = UUID.randomUUID().toString(),
-                    text = data,
-                    senderName = "Me",
-                    conversationId = "",
-                    senderId = "",
-                    timestamp = System.currentTimeMillis(),
-                    typeMessage = TypeMessage.SENT
-                )
+    private fun requireSession(): DefaultClientWebSocketSession? {
+        val current = session
+        if (current == null) {
+            _events.tryEmit(
+                ConnectionState.Connection.Error("Sem conexão ativa")
             )
-        ) // Como ta observando no room n precisaria desse tryEmit
+        }
+        return current
     }
 }

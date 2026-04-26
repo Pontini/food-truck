@@ -11,7 +11,6 @@ class WebSocketDataToMessageMapper : Mapper<String, Message> {
             id = UUID.randomUUID().toString(),
             text = from,
             conversationId = "",
-            senderId = "",
             senderName = "",
             timestamp = System.currentTimeMillis(),
             typeMessage = TypeMessage.RECEIVED

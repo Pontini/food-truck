@@ -10,7 +10,7 @@ interface ChatRepository {
 
     suspend fun sendMessage(message: String,conversationId:String)
 
-    fun observeMessages(conversationId: String): Flow<List<Message>>
+    fun getMessagesById(conversationId: String): Flow<List<Message>>
 
     fun observeConnection(): Flow<ConnectionState>
 }

@@ -40,7 +40,7 @@ fun ChatScreen(
 
     LaunchedEffect(state.messages.size) {
         if (state.messages.isNotEmpty()) {
-            listState.animateScrollToItem(0) // 🔥 melhor UX
+            listState.animateScrollToItem(0)
         }
     }
 
@@ -61,9 +61,6 @@ fun ChatScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-
-            // 🔥 NOVA TARJA DE STATUS
-
             Text(name)
             Spacer(modifier = Modifier.width(8.dp))
 
@@ -81,14 +78,13 @@ fun ChatScreen(
                     .fillMaxWidth()
             ) {
                 items(
-                    items = state.messages, // 🔥 evita reversed pesado
+                    items = state.messages,
                     key = { it.id }
                 ) { message ->
                     ChatBubble(message)
                 }
             }
 
-            // 🔥 INPUT MAIS MODERNO
             var text by rememberSaveable { mutableStateOf("") }
 
             Surface(

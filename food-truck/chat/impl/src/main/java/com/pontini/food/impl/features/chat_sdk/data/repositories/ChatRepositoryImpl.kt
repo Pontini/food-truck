@@ -27,21 +27,11 @@ class ChatRepositoryImpl(
             message = message
         )
 
-        val msg = Message(
-            id = generateId(),
-            conversationId = conversationId,
-            text = message,
-            senderId = "me",
-            senderName = "Você",
-            timestamp = System.currentTimeMillis(),
-            typeMessage = TypeMessage.SENT
-        )
-
         local.insert(sendMessageRequest)
         remote.send(message, conversationId)
     }
 
-    override fun observeMessages(conversationId: String): Flow<List<Message>> {
+    override fun getMessagesById(conversationId: String): Flow<List<Message>> {
         remote.events
             .mapNotNull { event ->
                 when (event) {
@@ -64,6 +54,4 @@ class ChatRepositoryImpl(
         return remote.events
             .filterIsInstance<ConnectionState.Connection>()
     }
-
-    private fun generateId(): String = java.util.UUID.randomUUID().toString()
 }

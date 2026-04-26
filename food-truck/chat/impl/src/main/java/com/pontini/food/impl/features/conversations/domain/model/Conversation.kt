@@ -6,3 +6,19 @@ data class Conversation(
     val lastMessage: String,
     val timestamp: Long
 )
+
+sealed class ConversationResult {
+    data class Success(
+        val data: List<Conversation>,
+        val source: Source
+    ) : ConversationResult()
+
+    data class Error(val message: String) : ConversationResult()
+
+    object Loading : ConversationResult()
+}
+
+enum class Source {
+    CACHE,
+    REMOTE
+}

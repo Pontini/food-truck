@@ -13,5 +13,6 @@ data class ConversationsState(
 sealed class ConnectionStatus {
     object Online : ConnectionStatus()
     object OfflineWithCache : ConnectionStatus()
+    object Connecting : ConnectionStatus()
     object OfflineNoData : ConnectionStatus()
 }

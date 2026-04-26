@@ -80,11 +80,11 @@ class ChatManagerImpl(
         chatRepository.sendMessage(message, conversationId)
     }
 
-    override fun observeMessages(conversationId: String): Flow<List<Message>> {
-        return chatRepository.observeMessages(conversationId)
+    override fun getMessagesById(conversationId: String): Flow<List<Message>> {
+        return chatRepository.getMessagesById(conversationId)
     }
 
-    override fun observeConnection(): Flow<ConnectionState> {
+    override fun getConnectionStatus(): Flow<ConnectionState> {
         return chatRepository.observeConnection()
     }
 }

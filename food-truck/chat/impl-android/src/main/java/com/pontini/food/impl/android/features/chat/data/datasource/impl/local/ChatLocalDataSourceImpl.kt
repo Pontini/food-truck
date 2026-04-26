@@ -20,7 +20,6 @@ class ChatLocalDataSourceImpl(
                     id = entity.id,
                     conversationId = entity.id,
                     text = entity.message,
-                    senderId = "me",
                     senderName = "Você",
                     timestamp = entity.timestamp,
                     typeMessage = com.pontini.food.domain.model.TypeMessage.SENT
