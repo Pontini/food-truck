@@ -29,7 +29,7 @@ val chatSdkModule = module {
     factory<ChatRemoteDataSource> {
         ChatRemoteDataSourceImpl(
             client = get(),
-            webSocketDataToMessageMapper = get(INCOMING_MESSAGE)
+            webSocketDataToMessageMapper = WebSocketDataToMessageMapper()
         )
     }
 
@@ -44,7 +44,7 @@ val chatSdkModule = module {
         }
     }
 
-    factory<Mapper<String, Message>>(INCOMING_MESSAGE) {
+  /*  factory<Mapper<String, Message>>(INCOMING_MESSAGE) {
         WebSocketDataToMessageMapper()
-    }
+    }*/
 }

@@ -33,6 +33,7 @@ class ChatViewModel(
     private fun observeMessages(conversationId: String) {
         viewModelScope.launch {
             chatManager.getMessagesById(conversationId).collect { list ->
+                println("📨 [ViewModel] Received messages: ${list.size}")
                 setState {
                     it.copy(messages = list)
                 }

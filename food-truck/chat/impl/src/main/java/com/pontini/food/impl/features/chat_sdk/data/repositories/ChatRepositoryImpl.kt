@@ -7,8 +7,12 @@ import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatLocalDataSour
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.model.request.SendMessageRequest
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 
@@ -24,7 +28,8 @@ class ChatRepositoryImpl(
     override suspend fun sendMessage(message: String, conversationId: String) {
         val sendMessageRequest = SendMessageRequest(
             conversationId = conversationId,
-            message = message
+            message = message,
+            isSent = true
         )
 
         local.insert(sendMessageRequest)
@@ -32,20 +37,24 @@ class ChatRepositoryImpl(
     }
 
     override fun getMessagesById(conversationId: String): Flow<List<Message>> {
+
         remote.events
             .mapNotNull { event ->
-                when (event) {
-                    is ConnectionState.Data.MessageReceived -> event.message
-                    else -> null
-                }
+                (event as? ConnectionState.Data.MessageReceived)?.message
             }
             .onEach { message ->
-                val sendMessageRequest = SendMessageRequest(
-                    conversationId = conversationId,
-                    message = message.text
+
+                println("📩 [Repository] Received: ${message.text}")
+
+                local.insert(
+                    SendMessageRequest(
+                        conversationId = conversationId,
+                        message = message.text,
+                        isSent = message.typeMessage == TypeMessage.SENT
+                    )
                 )
-                local.insert(sendMessageRequest)
             }
+            .launchIn(CoroutineScope(Dispatchers.IO))
 
         return local.observeMessages(conversationId)
     }

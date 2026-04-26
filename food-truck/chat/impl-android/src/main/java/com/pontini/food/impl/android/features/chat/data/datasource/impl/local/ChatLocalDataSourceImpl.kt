@@ -1,6 +1,7 @@
 package com.pontini.food.impl.android.features.chat.data.datasource.impl.local
 
 import com.pontini.food.domain.model.Message
+import com.pontini.food.domain.model.TypeMessage
 import com.pontini.food.impl.android.features.chat.data.datasource.impl.local.room.MessageDao
 import com.pontini.food.impl.android.features.chat.data.model.room.MessageEntity
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatLocalDataSource
@@ -14,17 +15,17 @@ class ChatLocalDataSourceImpl(
     private val messageToEntityMapper: Mapper<SendMessageRequest, MessageEntity>
 ) : ChatLocalDataSource {
     override fun observeMessages(conversationId: String): Flow<List<Message>> {
-        return dao.observe().map { entities ->
-            entities.filter { it.id == conversationId }.map { entity ->
+        return dao.observe(conversationId).map { entities ->
+            entities.map { entity ->
                 Message(
                     id = entity.id,
-                    conversationId = entity.id,
+                    conversationId = entity.conversationId,
                     text = entity.message,
-                    senderName = "Você",
+                    senderName = entity.senderName,
                     timestamp = entity.timestamp,
-                    typeMessage = com.pontini.food.domain.model.TypeMessage.SENT
+                    typeMessage = if (entity.isSent) TypeMessage.SENT else TypeMessage.RECEIVED
                 )
-            } // Fazer um mapper para converter MessageEntity para Message
+            }
         }
     }
 

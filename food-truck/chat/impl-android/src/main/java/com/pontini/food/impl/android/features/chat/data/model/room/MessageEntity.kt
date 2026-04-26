@@ -9,5 +9,6 @@ data class MessageEntity(
     val conversationId: String,
     val message: String,
     val senderName: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val isSent: Boolean
 )

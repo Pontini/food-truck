@@ -5,13 +5,14 @@ import com.pontini.food.domain.model.TypeMessage
 import com.pontini.food.mapper.Mapper
 import java.util.UUID
 
-class WebSocketDataToMessageMapper : Mapper<String, Message> {
-    override fun map(from: String): Message {
+class WebSocketDataToMessageMapper  {
+     fun map(from: String,conversationID:String): Message {
+         println("conversationID in mapper: $conversationID")
         return Message(
             id = UUID.randomUUID().toString(),
             text = from,
-            conversationId = "",
-            senderName = "",
+            conversationId =conversationID,
+            senderName = "Server",
             timestamp = System.currentTimeMillis(),
             typeMessage = TypeMessage.RECEIVED
         )
