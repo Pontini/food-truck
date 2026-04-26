@@ -1,7 +1,7 @@
 package com.pontini.food.impl.data.datasource.impl
 
-import com.pontini.food.impl.data.datasource.ConversationDataSource
-import com.pontini.food.impl.data.model.ConversationResponseData
+import com.pontini.food.impl.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.data.model.response.ConversationResponseData
 import com.pontini.food.impl.domain.model.Conversation
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -9,9 +9,9 @@ import io.ktor.client.request.get
 
 private const val LAST_CONVERSATIONS_ENDPOINT = "https://jsonplaceholder.typicode.com/users"
 
-class ConversationRemoteDataSourceImpl(
+class ConversationRemoteRemoteDataSourceImpl(
     private val client: HttpClient
-) : ConversationDataSource {
+) : ConversationRemoteDataSource {
 
     override suspend fun getLastMessages(): List<Conversation> {
         val response: List<ConversationResponseData> =

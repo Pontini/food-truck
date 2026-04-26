@@ -10,11 +10,13 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.androidx.compose.koinViewModel
+
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsViewModel
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ConversationsScreen(
@@ -23,29 +25,36 @@ fun ConversationsScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Box {
+    Column(modifier = Modifier.fillMaxSize()) {
+        ConnectionBanner(status = state.connectionStatus)
 
-        LazyColumn {
-            items(state.conversations, key = { it.id }) { conversation ->
-                ConversationItem(
-                    conversation = conversation,
-                    onClick = { onOpenChat(conversation.id) }
+        Box(modifier = Modifier.weight(1f)) {
+
+            LazyColumn(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(state.conversations, key = { it.id }) { conversation ->
+                    ConversationItem(
+                        conversation = conversation,
+                        onClick = { onOpenChat(conversation.id) }
+                    )
+                }
+            }
+
+            if (state.isLoading && state.conversations.isEmpty()) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
                 )
             }
-        }
 
-        if (state.isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+            if (state.error != null && state.conversations.isEmpty()) {
+                ErrorView(
+                    message = state.error ?: "Ocorreu um erro",
+                    onRetry = {
 
-        state.error?.let {
-            ErrorView(
-                message = it,
-                onRetry = {
-                }
-            )
+                    }
+                )
+            }
         }
     }
 }
