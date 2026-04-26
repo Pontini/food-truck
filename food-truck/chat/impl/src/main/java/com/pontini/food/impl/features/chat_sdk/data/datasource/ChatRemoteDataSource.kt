@@ -1,4 +1,4 @@
-package com.pontini.food.impl.data.datasource
+package com.pontini.food.impl.features.chat_sdk.data.datasource
 
 import com.pontini.food.impl.features.chat_sdk.domain.model.ConnectionState
 import kotlinx.coroutines.flow.Flow

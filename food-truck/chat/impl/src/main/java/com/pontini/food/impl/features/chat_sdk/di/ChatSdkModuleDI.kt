@@ -1,6 +1,6 @@
 package com.pontini.food.impl.features.chat_sdk.di
 
-import com.pontini.food.impl.data.datasource.ChatRemoteDataSource
+import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.datasource.impl.ChatRemoteDataSourceImpl
 import com.pontini.food.impl.features.chat_sdk.data.repositories.ChatRepositoryImpl
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository

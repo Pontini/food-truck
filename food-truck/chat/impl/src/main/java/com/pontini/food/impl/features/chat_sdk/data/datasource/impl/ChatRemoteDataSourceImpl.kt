@@ -1,7 +1,7 @@
 package com.pontini.food.impl.features.chat_sdk.data.datasource.impl
 
 import com.pontini.food.domain.model.Message
-import com.pontini.food.impl.data.datasource.ChatRemoteDataSource
+import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.domain.model.ConnectionState
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
