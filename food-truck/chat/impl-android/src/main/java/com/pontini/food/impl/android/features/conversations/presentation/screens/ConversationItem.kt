@@ -35,7 +35,7 @@ fun ConversationItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        // 👤 Avatar
+
         Box(
             modifier = Modifier
                 .size(48.dp)
