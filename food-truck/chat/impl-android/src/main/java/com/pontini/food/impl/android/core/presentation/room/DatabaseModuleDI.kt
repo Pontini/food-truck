@@ -1,7 +1,7 @@
 package com.pontini.food.impl.android.core.presentation.room
 
 import androidx.room.Room
-import com.pontini.food.impl.android.core.presentation.mapper.Mapper
+import com.pontini.food.mapper.Mapper
 import com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.room.ConversationLocalDataSourceImpl
 import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationDomainToEntityMapper
 import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationEntityToDomainMapper

@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.core.presentation.mapper
+package com.pontini.food.mapper
 
 interface Mapper<FROM, TO> {
     fun map(from: FROM): TO
