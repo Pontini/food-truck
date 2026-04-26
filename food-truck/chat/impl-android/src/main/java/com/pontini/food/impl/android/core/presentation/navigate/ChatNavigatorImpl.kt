@@ -1,10 +1,10 @@
-package com.pontini.food.impl.android.presentation.navigate
+package com.pontini.food.impl.android.core.presentation.navigate
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.pontini.food.android.navigate.ChatNavigator
-import com.pontini.food.impl.android.presentation.screens.ChatScreen
+import com.pontini.food.impl.android.conversations.screens.ChatScreen
 
 private const val CHAT_ROUTE = "chat"
 

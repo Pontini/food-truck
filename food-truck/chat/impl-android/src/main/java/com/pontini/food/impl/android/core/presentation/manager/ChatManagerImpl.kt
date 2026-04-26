@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.presentation.manager
+package com.pontini.food.impl.android.core.presentation.manager
 
 import android.content.Context
 import android.net.ConnectivityManager

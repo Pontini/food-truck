@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.presentation.viewmodel
+package com.pontini.food.impl.android.core.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

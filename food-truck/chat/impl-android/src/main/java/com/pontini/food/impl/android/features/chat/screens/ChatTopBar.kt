@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.presentation.screens
+package com.pontini.food.impl.android.conversations.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

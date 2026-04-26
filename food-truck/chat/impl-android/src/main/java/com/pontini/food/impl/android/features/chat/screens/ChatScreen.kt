@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.presentation.screens
+package com.pontini.food.impl.android.conversations.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pontini.food.impl.android.presentation.viewmodel.ChatIntent
-import com.pontini.food.impl.android.presentation.viewmodel.ChatViewModel
+import com.pontini.food.impl.android.features.chat.viewmodel.ChatViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

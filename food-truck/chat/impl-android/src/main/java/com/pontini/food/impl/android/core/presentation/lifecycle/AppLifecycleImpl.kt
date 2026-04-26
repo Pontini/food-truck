@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.lifecycle
+package com.pontini.food.impl.android.core.presentation.lifecycle
 
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
