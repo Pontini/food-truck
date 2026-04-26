@@ -21,7 +21,8 @@ val INCOMING_MESSAGE = named("INCOMING_MESSAGE")
 val chatSdkModule = module {
     single<ChatRepository> {
         ChatRepositoryImpl(
-            remoteDataSource = get()
+            remote = get(),
+            local = get()
         )
     }
 

@@ -11,13 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pontini.food.domain.model.TypeMessage
 import com.pontini.food.impl.android.features.chat.presentation.screens.Avatar
 
 
 @Composable
 fun ChatBubble(message: Message) {
 
-    val isMe = message.sender == "Me"
+    val isMe = message.typeMessage == TypeMessage.SENT
 
     Row(
         modifier = Modifier
@@ -28,7 +29,7 @@ fun ChatBubble(message: Message) {
     ) {
 
         if (!isMe) {
-            Avatar(message.sender)
+            Avatar(message.senderName)
             Spacer(modifier = Modifier.width(6.dp))
         }
 

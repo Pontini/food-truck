@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.room
+package com.pontini.food.impl.android.features.conversations.data.datasource.impl.local
 
 import com.pontini.food.mapper.Mapper
 import com.pontini.food.mapper.mapList

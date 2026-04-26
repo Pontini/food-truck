@@ -9,60 +9,29 @@ class ConversationsViewModel(
     private val repository: ConversationRepository
 ) : BaseViewModel<ConversationsIntent, ConversationsState>(ConversationsState()) {
 
-    init {
-        observe()
-        refresh()
+    override fun dispatcher(intent: ConversationsIntent) {
+        when (intent) {
+            ConversationsIntent.Init -> {
+                onInit()
+            }
+        }
     }
 
-    private fun observe() {
+    private fun onInit() {
         viewModelScope.launch {
-            repository.observe().collect { list ->
-                setState {
-                    it.copy(
+            setState { it.copy(isLoading = true) }
+            repository.getConversations().collect { list ->
+                setState { state ->
+                    state.copy(
                         conversations = list,
+                        isLoading = false,
                         connectionStatus = when {
-                            it.connectionStatus is ConnectionStatus.Online -> ConnectionStatus.Online
-                            list.isNotEmpty() -> ConnectionStatus.OfflineWithCache
+                            list.isNotEmpty() -> ConnectionStatus.Online
                             else -> ConnectionStatus.OfflineNoData
                         }
                     )
                 }
             }
         }
-    }
-
-    private fun refresh() {
-        viewModelScope.launch {
-
-            setState { it.copy(isLoading = true, error = null) }
-
-            try {
-                repository.refresh()
-
-                setState {
-                    it.copy(
-                        isLoading = false,
-                        connectionStatus = ConnectionStatus.Online
-                    )
-                }
-
-            } catch (e: Exception) {
-                setState {
-                    it.copy(
-                        isLoading = false,
-                        connectionStatus = if (it.conversations.isNotEmpty()) {
-                            ConnectionStatus.OfflineWithCache
-                        } else {
-                            ConnectionStatus.OfflineNoData
-                        },
-                        error = "Sem conexão"
-                    )
-                }
-            }
-        }
-    }
-
-    override fun dispatcher(intent: ConversationsIntent) {
-
     }
 }

@@ -4,5 +4,5 @@ sealed interface ChatIntent {
 
     data class SendMessage(val text: String) : ChatIntent
 
-    data class Connect(val conversationId:String) : ChatIntent
+    data class Init(val conversationId:String) : ChatIntent
 }

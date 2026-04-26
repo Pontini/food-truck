@@ -7,6 +7,7 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pontini.food.android.manager.ChatManager
+import com.pontini.food.domain.model.ConnectionState
 import com.pontini.food.domain.model.Message
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import kotlinx.coroutines.CoroutineScope
@@ -75,11 +76,15 @@ class ChatManagerImpl(
         }
     }
 
-    override suspend fun sendMessage(message: String) {
-        chatRepository.sendMessage(message)
+    override suspend fun sendMessage(message: String, conversationId: String ) {
+        chatRepository.sendMessage(message, conversationId)
     }
 
-    override fun observeMessages(): Flow<List<Message>> {
-        return chatRepository.observeMessages()
+    override fun observeMessages(conversationId: String): Flow<List<Message>> {
+        return chatRepository.observeMessages(conversationId)
+    }
+
+    override fun observeConnection(): Flow<ConnectionState> {
+        return chatRepository.observeConnection()
     }
 }

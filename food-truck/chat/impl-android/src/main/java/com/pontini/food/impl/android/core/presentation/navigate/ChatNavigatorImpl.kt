@@ -8,15 +8,23 @@ import androidx.navigation.navArgument
 import com.pontini.food.android.navigate.ChatNavigator
 import com.pontini.food.impl.android.features.chat.presentation.screens.ChatScreen
 import com.pontini.food.impl.android.features.conversations.presentation.screens.ConversationsScreen
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 private const val CONVERSATIONS_ROUTE = "conversations"
 private const val CHAT_ROUTE = "chat"
-private const val CHAT_WITH_ID = "chat/{conversationId}"
+private const val CHAT_WITH_ARGS = "chat/{conversationId}/{name}"
 
 class ChatNavigatorImpl : ChatNavigator {
 
-    override fun openChat(navController: NavController, conversationId: String) {
-        navController.navigate("$CHAT_ROUTE/$conversationId")
+    override fun openChat(
+        navController: NavController,
+        conversationId: String,
+        name: String
+    ) {
+        val encodedName = URLEncoder.encode(name, StandardCharsets.UTF_8.toString())
+
+        navController.navigate("$CHAT_ROUTE/$conversationId/$encodedName")
     }
 
     override fun openConversations(navController: NavController) {
@@ -28,27 +36,37 @@ class ChatNavigatorImpl : ChatNavigator {
         navGraphBuilder: NavGraphBuilder
     ) {
 
-        // 🟢 TELA INICIAL
+        // 🟢 TELA DE CONVERSAS
         navGraphBuilder.composable(CONVERSATIONS_ROUTE) {
             ConversationsScreen(
-                onOpenChat = { id ->
-                    openChat(navController, id)
+                onOpenChat = { conversation ->
+                    openChat(
+                        navController = navController,
+                        conversationId = conversation.id,
+                        name = conversation.name
+                    )
                 }
             )
         }
 
+        // 💬 TELA DE CHAT
         navGraphBuilder.composable(
-            route = CHAT_WITH_ID,
+            route = CHAT_WITH_ARGS,
             arguments = listOf(
-                navArgument("conversationId") { type = NavType.StringType }
+                navArgument("conversationId") { type = NavType.StringType },
+                navArgument("name") { type = NavType.StringType }
             )
         ) { backStackEntry ->
 
             val conversationId =
                 backStackEntry.arguments?.getString("conversationId") ?: ""
 
+            val name =
+                backStackEntry.arguments?.getString("name") ?: ""
+
             ChatScreen(
-                conversationId = conversationId
+                conversationId = conversationId,
+                name = name
             )
         }
     }

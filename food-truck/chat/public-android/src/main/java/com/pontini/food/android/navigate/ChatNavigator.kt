@@ -9,7 +9,8 @@ interface ChatNavigator {
 
     fun openChat(
         navController: NavController,
-        conversationId: String
+        conversationId: String,
+        name: String
     )
 
     fun registerGraph(

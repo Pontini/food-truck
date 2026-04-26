@@ -9,6 +9,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
@@ -16,14 +17,20 @@ import org.koin.androidx.compose.koinViewModel
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsIntent
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsViewModel
+import com.pontini.food.impl.features.conversations.domain.model.Conversation
 
 @Composable
 fun ConversationsScreen(
     viewModel: ConversationsViewModel = koinViewModel(),
-    onOpenChat: (String) -> Unit
+    onOpenChat: (Conversation) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.dispatcher(ConversationsIntent.Init)
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         ConnectionBanner(status = state.connectionStatus)
@@ -36,7 +43,7 @@ fun ConversationsScreen(
                 items(state.conversations, key = { it.id }) { conversation ->
                     ConversationItem(
                         conversation = conversation,
-                        onClick = { onOpenChat(conversation.id) }
+                        onClick = { onOpenChat(conversation) }
                     )
                 }
             }

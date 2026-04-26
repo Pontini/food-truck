@@ -1,6 +1,5 @@
-package com.pontini.food.impl.features.chat_sdk.domain.model
+package com.pontini.food.domain.model
 
-import com.pontini.food.domain.model.Message
 
 sealed class ConnectionState {
 

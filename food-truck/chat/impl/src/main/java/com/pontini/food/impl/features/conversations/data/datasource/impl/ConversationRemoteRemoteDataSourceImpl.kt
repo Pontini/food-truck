@@ -1,6 +1,6 @@
 package com.pontini.food.impl.features.conversations.data.datasource.impl
 
-import com.pontini.food.impl.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.features.conversations.data.datasource.ConversationRemoteDataSource
 import com.pontini.food.impl.data.model.response.ConversationResponseData
 import com.pontini.food.impl.features.conversations.domain.model.Conversation
 import io.ktor.client.HttpClient

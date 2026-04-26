@@ -1,4 +1,4 @@
-package com.pontini.food.impl.android.conversations.screens
+package com.pontini.food.impl.android.features.chat.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ChatTopBar(
     isConnected: Boolean,
-    isConnecting: Boolean
+    isConnecting: Boolean,
+    userName: String
 ) {
     val color = when {
         isConnecting -> Color.Yellow
@@ -42,7 +43,7 @@ fun ChatTopBar(
             Spacer(modifier = Modifier.width(8.dp))
 
             Column {
-                Text("Atendimento")
+                Text(userName)
 
                 Text(
                     text = when {
