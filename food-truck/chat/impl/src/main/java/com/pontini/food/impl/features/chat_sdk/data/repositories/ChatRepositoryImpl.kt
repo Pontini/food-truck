@@ -5,11 +5,12 @@ import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSou
 import com.pontini.food.impl.features.chat_sdk.domain.model.ConnectionState
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.runningFold
+
+
 
 class ChatRepositoryImpl(
     private val remoteDataSource: ChatRemoteDataSource
@@ -25,7 +26,6 @@ class ChatRepositoryImpl(
 
     override fun observeMessages(): Flow<List<Message>> {
         return remoteDataSource.events
-            .filterIsInstance<ConnectionState.Data>()
             .mapNotNull { event ->
                 when (event) {
                     is ConnectionState.Data.MessageReceived -> event.message
@@ -35,21 +35,14 @@ class ChatRepositoryImpl(
             }
 
             .onEach {
-                println("📩 [Repository] Mensagem: ${it.text} (${it.sender})")
-            }
+                println("📩 [Repository] ${it.sender}: ${it.text}")
+            }.runningFold(emptyList<Message>()) { acc, message ->
+                val updated = (acc + message).takeLast(100)
 
-
-            .runningFold(emptyList<Message>()) { acc, message ->
-                val updated = acc + message
-
-                println("🧠 [Repository] Lista atualizada (${updated.size} msgs)")
-                println("➡️ Última: ${message.text}")
+                println("🧠 Lista atualizada (${updated.size} msgs)")
 
                 updated
             }
-
-            // 👇 evita recomposição desnecessária
-            .distinctUntilChanged()
     }
 
     override fun observeConnection(): Flow<ConnectionState> {

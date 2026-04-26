@@ -30,17 +30,16 @@ class ChatRemoteDataSourceImpl(
         if (isConnected) return
         isConnected = true
 
-        _events.emit(ConnectionState.Connection.Connecting)
+        _events.tryEmit(ConnectionState.Connection.Connecting)
 
         try {
             client.webSocket("wss://ws.postman-echo.com/raw") {
 
                 session = this
-                _events.emit(ConnectionState.Connection.Connected)
+                _events.tryEmit(ConnectionState.Connection.Connected)
 
                 println("✅ WebSocket conectado e aguardando mensagens...")
 
-                // 👇 loop infinito enquanto conexão ativa
                 while (true) {
                     val frame = incoming.receive()
 
@@ -50,17 +49,22 @@ class ChatRemoteDataSourceImpl(
 
                     val message = webSocketDataToMessageMapper.map(text)
 
-                    _events.emit(
-                        ConnectionState.Data.MessageReceived(
-                            message = message
-                        )
+                    val emitted = _events.tryEmit(
+                        ConnectionState.Data.MessageReceived(message)
                     )
+
+                    if (!emitted) {
+                        println("⚠️ Evento descartado (buffer cheio)")
+                    }
                 }
             }
         } catch (e: Exception) {
             isConnected = false
             println("❌ Conexão caiu: ${e.message}")
-            _events.emit(ConnectionState.Connection.Error(e.message ?: "Erro"))
+
+            _events.tryEmit(
+                ConnectionState.Connection.Error(e.message ?: "Erro")
+            )
         }
     }
 
@@ -78,10 +82,12 @@ class ChatRemoteDataSourceImpl(
         } catch (e: Exception) {
             e.printStackTrace()
 
-            _events.emit(ConnectionState.Connection.Error("Erro ao enviar"))
+            _events.tryEmit(
+                ConnectionState.Connection.Error("Erro ao enviar")
+            )
         }
 
-        _events.emit(
+        _events.tryEmit(
             ConnectionState.Data.MessageSent(
                 Message(
                     id = UUID.randomUUID().toString(),
