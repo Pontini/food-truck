@@ -1,11 +1,11 @@
 package com.pontini.food.impl.android.di
 
-import com.pontini.food.impl.android.core.presentation.room.databaseModule
-import com.pontini.food.impl.di.chatCoreModules
+import com.pontini.food.impl.android.core.presentation.room.externalModules
+import com.pontini.food.impl.di.dataModules
 import org.koin.dsl.module
 
 val chatModule = module {
     includes(presentationModules)
-    includes(chatCoreModules)
-    includes(databaseModule)
+    includes(dataModules)
+    includes(externalModules)
 }

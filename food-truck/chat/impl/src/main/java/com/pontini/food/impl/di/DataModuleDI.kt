@@ -16,7 +16,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-val chatCoreModules = module {
+val dataModules = module {
 
     single<ChatRepository> {
         ChatRepositoryImpl(

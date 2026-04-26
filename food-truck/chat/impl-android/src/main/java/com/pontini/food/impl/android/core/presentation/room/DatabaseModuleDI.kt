@@ -15,7 +15,7 @@ import org.koin.dsl.module
 val ENTITY_TO_DOMAIN = named("ENTITY_TO_DOMAIN")
 val DOMAIN_TO_ENTITY = named("DOMAIN_TO_ENTITY")
 
-val databaseModule = module {
+val externalModules = module {
     single {
         Room.databaseBuilder(
             androidContext(),
