@@ -2,9 +2,7 @@ package com.pontini.food.impl.features.chat_sdk.data.datasource.impl
 
 import com.pontini.food.domain.model.Message
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
-import com.pontini.food.impl.features.chat_sdk.data.mappers.IncomingMessageMapper
 import com.pontini.food.impl.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
 import com.pontini.food.mapper.Mapper
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
@@ -17,7 +15,7 @@ import java.util.UUID
 
 class ChatRemoteDataSourceImpl(
     private val client: HttpClient,
-    private val incomingMessageMapper: Mapper<String, Message>,
+    private val webSocketDataToMessageMapper: Mapper<String, Message>,
 ) : ChatRemoteDataSource {
 
     private val _events =
@@ -50,7 +48,7 @@ class ChatRemoteDataSourceImpl(
 
                     println("📩 Recebido: $text")
 
-                    val message = incomingMessageMapper.map(text)
+                    val message = webSocketDataToMessageMapper.map(text)
 
                     _events.emit(
                         ConnectionState.Data.MessageReceived(
