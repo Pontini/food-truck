@@ -22,9 +22,10 @@ fun AppNavHost(
 
         composable(HOME_ROUTE) {
             HomeScreen(
-                onNavigateToChat = {
+                onNavigateToConversations = {
                     chatNavigator.openConversations(navController)
-                }
+                },
+                onNavigateToOrder = {}
             )
         }
 
