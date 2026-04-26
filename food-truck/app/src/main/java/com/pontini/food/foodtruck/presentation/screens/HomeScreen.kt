@@ -44,7 +44,6 @@ fun HomeScreen(
             verticalArrangement = Arrangement.Center
         ) {
 
-            // 🔥 Título
             Text(
                 text = "Food Truck",
                 style = MaterialTheme.typography.headlineLarge,
