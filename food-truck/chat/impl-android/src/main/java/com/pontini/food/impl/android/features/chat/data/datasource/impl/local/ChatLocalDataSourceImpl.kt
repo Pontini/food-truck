@@ -19,7 +19,7 @@ class ChatLocalDataSourceImpl(
                 Message(
                     id = entity.id,
                     conversationId = entity.id,
-                    text = entity.text,
+                    text = entity.message,
                     senderId = "me",
                     senderName = "Você",
                     timestamp = entity.timestamp,
