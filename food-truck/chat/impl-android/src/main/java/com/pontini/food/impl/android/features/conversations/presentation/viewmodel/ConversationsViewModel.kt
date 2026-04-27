@@ -19,51 +19,39 @@ class ConversationsViewModel(
 
     private fun onInit() {
         viewModelScope.launch {
-
             repository.getConversations().collect { result ->
-
-                when (result) {
-
-                    is ConversationResult.Loading -> {
-                        setState {
-                            it.copy(
+                setState { state ->
+                    when (result) {
+                        is ConversationResult.Loading -> {
+                            state.copy(
                                 isLoading = true,
                                 error = null
                             )
                         }
-                    }
+                        is ConversationResult.Success -> {
+                            val hasData = result.data.isNotEmpty()
 
-                    is ConversationResult.Success -> {
-                        setState { state ->
-                            val newStatus = when (result.source) {
-                                Source.REMOTE -> ConnectionStatus.Online
-                                Source.CACHE -> when {
-                                    state.connectionStatus == ConnectionStatus.Online ->
-                                        ConnectionStatus.Online
-                                    result.data.isNotEmpty() ->
-                                        ConnectionStatus.OfflineWithCache
-                                    else ->
-                                        ConnectionStatus.OfflineNoData
-                                }
+                            val connectionStatus = when {
+                                hasData && !state.isLoading -> ConnectionStatus.Online
+                                hasData -> ConnectionStatus.OfflineWithCache
+                                else -> ConnectionStatus.OfflineNoData
                             }
 
                             state.copy(
                                 conversations = result.data,
                                 isLoading = false,
-                                connectionStatus = newStatus,
+                                connectionStatus = connectionStatus,
                                 error = null
                             )
                         }
-                    }
-
-                    is ConversationResult.Error -> {
-                        setState { state ->
+                        is ConversationResult.Error -> {
                             state.copy(
                                 isLoading = false,
-                                connectionStatus = if (state.conversations.isNotEmpty()) {
-                                    ConnectionStatus.OfflineWithCache
-                                } else {
-                                    ConnectionStatus.OfflineNoData
+                                connectionStatus = when {
+                                    state.conversations.isNotEmpty() ->
+                                        ConnectionStatus.OfflineWithCache
+                                    else ->
+                                        ConnectionStatus.OfflineNoData
                                 },
                                 error = result.message
                             )

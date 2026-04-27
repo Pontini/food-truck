@@ -12,10 +12,8 @@ sealed class ConversationResult {
         val data: List<Conversation>,
         val source: Source
     ) : ConversationResult()
-
     data class Error(val message: String) : ConversationResult()
-
-    object Loading : ConversationResult()
+    data object Loading : ConversationResult()
 }
 
 enum class Source {
