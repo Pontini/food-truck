@@ -74,11 +74,12 @@ Implementação concreta sem dependências de Android, possibilitando uso multip
 
 ---
 
-## 💡 Modulo de observabilidade 
-Este modulo é pra simular um modulo que nao foi bem modularizado, e que é uma solucao interna da empresa.
-Como o objetivo é tornar uma solucao unificada entre as plataformas e ter uma solucao agunostica da empresa para poder se vender como empresa de chat,
-fez se necessário criar um facade e isolar no implAndroid. Essa seria exemplo pratico do implAndorid
+## 💡 Módulo de observabilidade 
+Este módulo é para simular um módulo que não foi bem modularizado e que é uma solução interna da empresa.
 
+Como o objetivo é tornar uma solução unificada entre as plataformas e ter uma solução agnóstica da empresa para poder se vender como empresa de chat, fez-se necessário criar uma facade e isolar no implAndroid. Este seria um exemplo prático do implAndroid.
+
+---
 
 ## 💡 Objetivo da Modularização
 
@@ -87,7 +88,7 @@ Essa divisão permite:
 - evitar acoplamento com o monorepo
 - facilitar a extração do projeto como produto independente
 - viabilizar multiplataforma
-- No final, teremos as depndencias do projeto, android, frameworks isolados no implAndroid, sendo possível tomar decisao de como resolver.
+- no final, teremos as dependências do projeto, Android e frameworks isolados no implAndroid, sendo possível tomar decisão de como resolver
 
 ---
 
@@ -113,14 +114,16 @@ Orquestram a comunicação com APIs (REST/WebSocket) e fornecem dados para a cam
 ### DataSources
 Implementam a comunicação direta com APIs (REST/WebSocket).
 
-# ⚙️ Estrategia de cache:
-Tela de contatos/ultimas mensagens: A ideia é mostrar a tela de chat com cache local, e assim que baixar os dados atualizar a tela.
-Para a listagem de mensagens buscamos via HTTP. Mas uma evolucao futura seria buscar via WebSocket que é mais performático e tem menor latência.
+---
 
-Tela de chat: Aqui eu usei um pouco a criatividade pq como eu nao codifiquei backend e estou usando APIs fictícias, eu acabo buscando as mensagens no banco de dados local, e conforme eu envio mensagem e recebo o retorno 
-eu vou atualiando banco de dados local. 
+# ⚙️ Estratégia de cache
 
+Tela de contatos/últimas mensagens: a ideia é mostrar a tela de chat com cache local e, assim que baixar os dados, atualizar a tela.  
+Para a listagem de mensagens buscamos via HTTP, mas uma evolução futura seria buscar via WebSocket, que é mais performático e tem menor latência.
 
+Tela de chat: aqui eu usei um pouco a criatividade, pois como eu não codifiquei backend e estou usando APIs fictícias, acabo buscando as mensagens no banco de dados local e, conforme envio mensagem e recebo o retorno, vou atualizando o banco de dados local.
+
+---
 
 # 🧠 Considerações Arquiteturais
 
@@ -132,12 +135,14 @@ eu vou atualiando banco de dados local.
 
 - Tornar um projeto totalmente agnóstico de frameworks pode levar à reinvenção da roda. É essencial ter critério na escolha e no isolamento de dependências.
 
-  Exemplos de reflexão:
-    - Faz sentido isolar o Koin?
-    - Faz sentido isolar o Retrofit?
-    - Faz sentido isolar um provider de chat ? 
+Exemplos de reflexão:
+- Faz sentido isolar o Koin?
+- Faz sentido isolar o Retrofit?
+- Faz sentido isolar um provider de chat?
 
-  A resposta, novamente, depende do contexto.
+A resposta, novamente, depende do contexto.
+
+---
 
 ## 🧩 Mappers: Construtor vs Extension Function
 
@@ -153,7 +158,7 @@ Gosto de utilizar *mappers* via construtor, mas já utilizei também como *exten
     - Reduz boilerplate
     - Pode dificultar testes e a evolução quando há dependências envolvidas
 
-No fim, a escolha depende do contexto — especialmente da complexidade da transformação (ex: encadeamento de parses) — e também da preferência da equipe.
+No fim, a escolha depende do contexto — especialmente da complexidade da transformação — e também da preferência da equipe.
 
 ---
 
@@ -161,75 +166,64 @@ No fim, a escolha depende do contexto — especialmente da complexidade da trans
 
 Existe bastante discussão sobre a criação de uma camada de *models* para a presentation, com o objetivo de evitar o acesso direto ao domain.
 
-O cuidado aqui é não cair no anti-pattern de criar camadas que não agregam valor — ou seja, estruturas que apenas repassam dados sem transformação ou regra.
+O cuidado aqui é não cair no anti-pattern de criar camadas que não agregam valor.
 
 ### 💡 Exemplo prático
 
 Em um projeto onde precisei implementar um SDUI (Server-Driven UI):
 
-- Em vez de criar uma camada de *domain models*
-- Optei por eliminar essa camada
-- E mapear diretamente os dados da API para componentes de UI (camada de presentation)
+- em vez de criar uma camada de *domain models*
+- optei por eliminar essa camada
+- e mapear diretamente os dados da API para componentes de UI
 
-**Isso está errado?**
+Isso está errado?
 
-- Pela literatura clássica: sim
-- Na prática: funcionou bem
+- pela literatura clássica: sim  
+- na prática: funcionou bem
 
 Conseguimos:
-- Reduzir complexidade
-- Diminuir código desnecessário
-- Acelerar a entrega
+- reduzir complexidade
+- diminuir código desnecessário
+- acelerar a entrega
 
-Até hoje, não sentimos falta da camada de domain nesse contexto.
-
-E o ponto principal:  
-Se um dia for necessário introduzir essa camada, é totalmente possível evoluir o design sem grandes problemas.
-
-
-Começar simples e evoluir conforme a necessidade tende a ser mais eficiente do que antecipar complexidade.
-
-Criar abstrações só faz sentido quando elas resolvem um problema real — não apenas para seguir um padrão.
+---
 
 ## ⚡ Contexto, Mercado e Pragmatismo
 
 Os tempos mudaram.
 
-Lembro como se fosse ontem o quanto era difícil conseguir um cartão de crédito — muitas vezes, era preciso praticamente implorar por aprovação.
+Lembro como se fosse ontem o quanto era difícil conseguir um cartão de crédito — muitas vezes era preciso praticamente implorar por aprovação.
 
 Hoje, até pessoas com score baixo conseguem acesso com relativa facilidade. Isso evidencia o quanto o mercado se tornou mais agressivo e competitivo.
 
 Esse cenário impacta diretamente a forma como construímos tecnologia: existe uma pressão real por **entregar valor rapidamente**.
 
-Isso não significa abrir mão de boas práticas. Pelo contrário — elas continuam sendo fundamentais.
+Isso não significa abrir mão de boas práticas.
 
-Mas é importante lembrar:  
+Mas é importante lembrar:
+
 **a tecnologia existe para nos servir, não o contrário.**
 
-O foco deve ser sempre:
-- resolver o problema da melhor forma possível
-- considerando o contexto
-- equilibrando qualidade, prazo e complexidade
-
-Boas decisões técnicas não são apenas sobre seguir padrões, mas sobre fazer escolhas conscientes diante da realidade do projeto.
+---
 
 ## ⚡ Observabilidade e Monitoramento
-- success rate
-- erro por minuto
-- instabilidade do WS
--  taxa de sucesso de conexão
-- taxa de falha
-* ws_connection_success
-* ws_connection_failed
 
-Envio de mensagem
-* ws_send_success
-* ws_send_failed
+- success rate  
+- erro por minuto  
+- instabilidade do WS  
+- taxa de sucesso de conexão  
+- taxa de falha  
 
+**WebSocket**
+- ws_connection_success  
+- ws_connection_failed  
 
-Logs de ENGENHARIA 
+**Envio de mensagem**
+- ws_send_success  
+- ws_send_failed  
 
-ws_connect_start
-ws_connected_success
-ws_connection_error
-ws_already_connected
+**Logs de engenharia**
+- ws_connect_start  
+- ws_connected_success  
+- ws_connection_error  
+- ws_already_connected  
