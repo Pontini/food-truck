@@ -43,9 +43,6 @@ class ChatRepositoryImpl(
                 (event as? ConnectionState.Data.MessageReceived)?.message
             }
             .onEach { message ->
-
-                println("📩 [Repository] Received: ${message.text}")
-
                 local.insert(
                     SendMessageRequest(
                         conversationId = conversationId,

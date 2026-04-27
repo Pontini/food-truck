@@ -7,7 +7,6 @@ import java.util.UUID
 
 class WebSocketDataToMessageMapper  {
      fun map(from: String,conversationID:String): Message {
-         println("conversationID in mapper: $conversationID")
         return Message(
             id = UUID.randomUUID().toString(),
             text = from,
