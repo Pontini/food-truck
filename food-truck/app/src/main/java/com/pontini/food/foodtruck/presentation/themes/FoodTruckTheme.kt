@@ -1,4 +1,4 @@
-package com.pontini.food.foodtruck.ui.theme
+package com.pontini.food.foodtruck.presentation.themes
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -10,10 +10,6 @@ import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalContext
-import com.pontini.food.foodtruck.presentation.themes.Orange40
-import com.pontini.food.foodtruck.presentation.themes.Orange80
-import com.pontini.food.foodtruck.presentation.themes.Yellow40
-import com.pontini.food.foodtruck.presentation.themes.Yellow80
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
