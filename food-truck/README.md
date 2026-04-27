@@ -47,4 +47,80 @@ O sucesso deste projeto permitirá que a Food Truck:
 - unifique a comunicação entre usuários e suporte em uma única plataforma
 - ganhe controle sobre sua própria infraestrutura de comunicação
 - potencialize sua camada social dentro do aplicativo
-- crie uma nova linha de negócio baseada em tecnologia  
+- crie uma nova linha de negócio baseada em tecnologia
+
+---
+
+# 🧱 Arquitetura Proposta
+
+## Módulos
+
+### `public`
+Contratos puramente Kotlin que devem ser implementados pelos módulos `impl` ou `implAndroid`.
+
+### `publicAndroid`
+Contratos específicos de Android. Este módulo pode abstrair:
+- frameworks Android
+- bibliotecas de terceiros
+- classes internas do projeto
+
+### `implAndroid`
+Implementações concretas para Android, isolando dependências de:
+- bibliotecas de terceiros
+- classes internas do monorepo
+
+### `impl`
+Implementação concreta sem dependências de Android, possibilitando uso multiplataforma (iOS, web, etc).
+
+---
+
+## 💡 Objetivo da Modularização
+
+Essa divisão permite:
+- isolar dependências específicas de Android
+- evitar acoplamento com o monorepo
+- facilitar a extração do projeto como produto independente
+- viabilizar multiplataforma
+
+---
+
+# ⚙️ Responsabilidades
+
+### ViewModel
+Responsável por orquestrar a lógica de apresentação, interagindo com os casos de uso e expondo estados para a UI.
+
+### ChatManager
+Responsável por gerenciar o estado da conexão (REST/WebSocket) e o ciclo de vida.
+
+> Observação: neste projeto foram utilizadas APIs fictícias. Em um cenário real, o ChatManager seria responsável por manter conexões ativas (ex: WebSocket) e atualizar a UI em tempo real com novas mensagens.
+
+### Intents
+Utilização de intents para controlar entradas da UI, tornando o fluxo de dados mais previsível e organizado.
+
+### States
+Centralização do estado da tela, facilitando debug e entendimento.
+
+### Repositories
+Orquestram a comunicação com APIs (REST/WebSocket) e fornecem dados para a camada de UI.
+
+### DataSources
+Implementam a comunicação direta com APIs (REST/WebSocket).
+
+---
+
+# 🧠 Considerações Arquiteturais
+
+- Tudo pode ser considerado overengineering — ou totalmente necessário. Tudo depende do contexto.
+
+- Padrões de projeto devem ser **adaptados**, não seguidos rigidamente. O foco deve ser resolver o problema da melhor forma possível dentro do contexto.
+
+- O uso de *use cases* apenas como repasse direto de chamadas pode ser considerado overengineering. O mais importante é manter responsabilidades bem definidas e uma arquitetura clara.
+
+- Tornar um projeto totalmente agnóstico de frameworks pode levar à reinvenção da roda. É essencial ter critério na escolha e no isolamento de dependências.
+
+  Exemplos de reflexão:
+    - Faz sentido isolar o Koin?
+    - Faz sentido isolar o Retrofit?
+    - Faz sentido isolar um provider de chat ? 
+
+  A resposta, novamente, depende do contexto.
