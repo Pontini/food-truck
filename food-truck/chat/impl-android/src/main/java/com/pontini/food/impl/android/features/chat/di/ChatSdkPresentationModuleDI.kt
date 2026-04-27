@@ -21,7 +21,6 @@ import org.koin.dsl.module
 
 val MESSAGE_TO_ENTITY = named("MESSAGE_TO_ENTITY")
 
-
 val chatSdkPresentationModule = module {
     single<ChatNavigator> { ChatNavigatorImpl() }
 
