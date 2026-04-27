@@ -28,30 +28,35 @@ android {
 }
 
 dependencies {
+
     implementation(project(":chat:public"))
     implementation(project(":chat:public-android"))
-    implementation("io.insert-koin:koin-android:3.5.6")
-    implementation("io.insert-koin:koin-androidx-compose:3.5.6")
+    implementation(project(":chat:impl"))
 
-    // 🔥 ROOM
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
+    implementation(libs.kotlinx.coroutines.android)
 
-    // 🔥 KSP (substitui kapt)
-    ksp("androidx.room:room-compiler:2.6.1")
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
-    // 🔥 Coroutines (Flow)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
-    // Compose base (igual app)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation libs.androidx.navigation.runtime.android
-    implementation libs.androidx.navigation.compose.android
-    implementation project(':chat:impl')
-    implementation libs.androidx.lifecycle.process
+
+    implementation(libs.androidx.navigation.runtime.android)
+    implementation(libs.androidx.navigation.compose.android)
+
+    implementation(libs.androidx.lifecycle.process)
 
     debugImplementation(libs.androidx.ui.tooling)
+
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
 }
