@@ -1,6 +1,5 @@
 package com.pontini.food.impl.features.chat_sdk.di
 
-import com.pontini.food.domain.model.Message
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.datasource.impl.ChatRemoteDataSourceImpl
 import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessageMapper
@@ -34,7 +33,7 @@ val chatSdkModule = module {
         HttpClient(OkHttp) {
             install(ContentNegotiation) {
                 json(Json {
-                    ignoreUnknownKeys = true
+                    ignoreUnknownKeys = true // Somente paliativo pois a API é de teste e pode retornar campos extras que não estão mapeados no modelo de dados
                 })
             }
             install(WebSockets)

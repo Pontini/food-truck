@@ -28,11 +28,6 @@ android {
 }
 
 dependencies {
-
-    implementation(project(":chat:public"))
-    implementation(project(":chat:public-android"))
-    implementation(project(":chat:impl"))
-
     implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.koin.android)
@@ -40,7 +35,6 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation project(':truck-observability')
     ksp(libs.androidx.room.compiler)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -52,6 +46,11 @@ dependencies {
     implementation(libs.androidx.navigation.compose.android)
 
     implementation(libs.androidx.lifecycle.process)
+
+    implementation(project(":chat:public"))
+    implementation(project(":chat:public-android"))
+    implementation(project(":chat:impl"))
+    implementation(project(":truck-observability"))
 
     debugImplementation(libs.androidx.ui.tooling)
 
