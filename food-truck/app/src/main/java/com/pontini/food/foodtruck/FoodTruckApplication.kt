@@ -2,6 +2,7 @@ package com.pontini.food.foodtruck
 
 import android.app.Application
 import com.pontini.food.impl.android.di.chatModule
+import com.pontini.food.truck_observability.di.telemetryFoodTruckServiceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -11,7 +12,8 @@ class FoodTruckApplication : Application() {
         startKoin {
             androidContext(this@FoodTruckApplication)
             modules(
-                chatModule
+                chatModule,
+                telemetryFoodTruckServiceModule
             )
         }
     }

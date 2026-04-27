@@ -48,6 +48,7 @@ dependencies {
     implementation libs.androidx.material3
     implementation project(':chat:public-android')
     implementation project(':chat:impl-android')
+    implementation project(':truck-observability')
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core

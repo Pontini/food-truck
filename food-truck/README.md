@@ -74,6 +74,12 @@ Implementação concreta sem dependências de Android, possibilitando uso multip
 
 ---
 
+## 💡 Modulo de observabilidade 
+Este modulo é pra simular um modulo que nao foi bem modularizado, e que é uma solucao interna da empresa.
+Como o objetivo é tornar uma solucao unificada entre as plataformas e ter uma solucao agunostica da empresa para poder se vender como empresa de chat,
+fez se necessário criar um facade e isolar no implAndroid. Essa seria exemplo pratico do implAndorid
+
+
 ## 💡 Objetivo da Modularização
 
 Essa divisão permite:
@@ -207,3 +213,23 @@ O foco deve ser sempre:
 
 Boas decisões técnicas não são apenas sobre seguir padrões, mas sobre fazer escolhas conscientes diante da realidade do projeto.
 
+## ⚡ Observabilidade e Monitoramento
+- success rate
+- erro por minuto
+- instabilidade do WS
+-  taxa de sucesso de conexão
+- taxa de falha
+* ws_connection_success
+* ws_connection_failed
+
+Envio de mensagem
+* ws_send_success
+* ws_send_failed
+
+
+Logs de ENGENHARIA 
+
+ws_connect_start
+ws_connected_success
+ws_connection_error
+ws_already_connected

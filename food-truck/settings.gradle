@@ -27,3 +27,4 @@ include(
         ":chat:impl",
         ":chat:impl-android"
 )
+include ':truck-observability'

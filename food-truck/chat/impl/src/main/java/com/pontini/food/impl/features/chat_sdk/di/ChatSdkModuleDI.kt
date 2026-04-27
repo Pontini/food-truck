@@ -7,6 +7,7 @@ import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessa
 import com.pontini.food.impl.features.chat_sdk.data.repositories.ChatRepositoryImpl
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import com.pontini.food.mapper.Mapper
+import com.pontini.food.observability.ObservabilityFacade
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.websocket.WebSockets
@@ -29,9 +30,12 @@ val chatSdkModule = module {
     factory<ChatRemoteDataSource> {
         ChatRemoteDataSourceImpl(
             client = get(),
-            webSocketDataToMessageMapper = WebSocketDataToMessageMapper()
+            webSocketDataToMessageMapper = WebSocketDataToMessageMapper(),
+            observabilityFacade = get()
         )
     }
+
+
 
     single<HttpClient> {
         HttpClient(OkHttp) {
