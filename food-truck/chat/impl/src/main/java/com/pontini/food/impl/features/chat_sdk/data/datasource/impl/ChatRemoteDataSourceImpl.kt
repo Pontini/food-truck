@@ -136,7 +136,7 @@ class ChatRemoteDataSourceImpl(
             observabilityFacade.error(e)
 
             _events.tryEmit(
-                ConnectionState.Connection.Error("Erro ao enviar")
+                ConnectionState.Connection.Error("Erro ao enviar uma mensagem ")
             )
         }
     }

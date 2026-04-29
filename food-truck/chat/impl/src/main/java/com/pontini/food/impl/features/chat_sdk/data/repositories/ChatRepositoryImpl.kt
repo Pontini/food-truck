@@ -7,12 +7,11 @@ import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatLocalDataSour
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.model.request.SendMessageRequest
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 
 class ChatRepositoryImpl(
@@ -36,7 +35,9 @@ class ChatRepositoryImpl(
     }
 
     override fun getMessagesById(conversationId: String): Flow<List<Message>> {
-        remote.events
+        val localFlow = local.observeMessages(conversationId)
+
+        val remoteSyncFlow = remote.events
             .mapNotNull { event ->
                 (event as? ConnectionState.Data.MessageReceived)?.message
             }
@@ -48,10 +49,9 @@ class ChatRepositoryImpl(
                         isSent = message.typeMessage == TypeMessage.SENT
                     )
                 )
-            }
-            .launchIn(CoroutineScope(Dispatchers.IO))
+            }.map { emptyList<Message>() }
 
-        return local.observeMessages(conversationId)
+        return merge(localFlow, remoteSyncFlow)
     }
 
     override fun getConnection(): Flow<ConnectionState> {

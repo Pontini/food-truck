@@ -31,7 +31,8 @@ val chatSdkPresentationModule = module {
     factory<ChatManager> {
         ChatManagerImpl(
             context = androidContext(),
-            chatRepository = get()
+            chatRepository = get(),
+            observability = get()
         )
     }
 
