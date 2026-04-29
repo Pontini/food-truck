@@ -11,7 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
@@ -55,7 +54,7 @@ class ChatRepositoryImpl(
         return local.observeMessages(conversationId)
     }
 
-    override fun observeConnection(): Flow<ConnectionState> {
+    override fun getConnection(): Flow<ConnectionState> {
         return remote.events
             .filterIsInstance<ConnectionState.Connection>()
     }

@@ -163,10 +163,10 @@ class ChatManagerImpl(
         return chatRepository.getMessagesById(conversationId)
     }
 
-    override fun getConnectionStatus(): Flow<ConnectionState> {
+    override fun getConnection(): Flow<ConnectionState> {
         observability.log(
             "Start observing connection state"
         )
-        return chatRepository.observeConnection()
+        return chatRepository.getConnection()
     }
 }
