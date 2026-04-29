@@ -16,6 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 
 class ChatManagerImpl(
     private val context: Context,
@@ -24,10 +25,7 @@ class ChatManagerImpl(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    @Volatile
-    private var isConnected = false
-
-    private val lock = Any()
+    private val isConnected = AtomicBoolean(false)
 
     private val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -52,31 +50,23 @@ class ChatManagerImpl(
 
         scope.coroutineContext.cancelChildren()
 
-        synchronized(lock) {
-            isConnected = false
-        }
+        isConnected.set(false)
     }
 
     private fun connect() {
-        synchronized(lock) {
-            if (isConnected) return
-            isConnected = true
-        }
+        if (isConnected.compareAndSet(false, true).not()) return
 
         scope.launch {
             try {
                 chatRepository.connect()
             } catch (e: Exception) {
                 e.printStackTrace()
-
-                synchronized(lock) {
-                    isConnected = false
-                }
+                isConnected.set(false)
             }
         }
     }
 
-    override suspend fun sendMessage(message: String, conversationId: String ) {
+    override suspend fun sendMessage(message: String, conversationId: String) {
         chatRepository.sendMessage(message, conversationId)
     }
 
