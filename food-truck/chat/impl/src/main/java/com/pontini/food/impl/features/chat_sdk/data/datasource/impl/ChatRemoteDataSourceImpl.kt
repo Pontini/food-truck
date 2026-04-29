@@ -3,6 +3,7 @@ package com.pontini.food.impl.features.chat_sdk.data.datasource.impl
 import com.pontini.food.domain.model.ConnectionState
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessageMapper
+import com.pontini.food.impl.features.chat_sdk.domain.model.SendMessageException
 import com.pontini.food.observability.ObservabilityFacade
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
@@ -95,7 +96,7 @@ class ChatRemoteDataSourceImpl(
             observabilityFacade.error(e)
 
             _events.tryEmit(
-                ConnectionState.Connection.Error(e.message ?: "Erro")
+                ConnectionState.Connection.FailedConnected(e.message ?: "Erro")
             )
         }
     }
@@ -135,9 +136,7 @@ class ChatRemoteDataSourceImpl(
 
             observabilityFacade.error(e)
 
-            _events.tryEmit(
-                ConnectionState.Connection.Error("Erro ao enviar uma mensagem ")
-            )
+            throw SendMessageException("Falha ao enviar mensagem. Tente novamente.")
         }
     }
 
@@ -146,10 +145,7 @@ class ChatRemoteDataSourceImpl(
 
         if (current == null) {
             observabilityFacade.log("ws_no_active_session")
-
-            _events.tryEmit(
-                ConnectionState.Connection.Error("Sem conexão ativa")
-            )
+            return null
         }
 
         return current

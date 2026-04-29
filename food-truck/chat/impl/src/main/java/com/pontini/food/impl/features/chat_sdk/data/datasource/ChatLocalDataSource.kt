@@ -5,6 +5,6 @@ import com.pontini.food.impl.features.chat_sdk.data.model.request.SendMessageReq
 import kotlinx.coroutines.flow.Flow
 
 interface ChatLocalDataSource {
-    fun observeMessages(conversationId: String): Flow<List<Message>>
+    fun getMessages(conversationId: String): Flow<List<Message>>
     suspend fun insert(sendMessageRequest: SendMessageRequest)
 }

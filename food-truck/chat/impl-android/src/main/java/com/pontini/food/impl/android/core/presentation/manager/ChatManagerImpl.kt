@@ -129,7 +129,6 @@ class ChatManagerImpl(
 
             } catch (e: Exception) {
                 isConnected.set(false)
-
                 observability.error(
                     e,
                     mapOf(
@@ -137,6 +136,7 @@ class ChatManagerImpl(
                         "action" to "reset_connection_flag"
                     )
                 )
+                throw e
             }
         }
     }

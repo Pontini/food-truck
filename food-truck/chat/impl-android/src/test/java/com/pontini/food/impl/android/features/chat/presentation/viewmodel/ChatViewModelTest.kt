@@ -103,7 +103,7 @@ class ChatViewModelTest {
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.Error("Falha"))
+        connectionFlow.emit(ConnectionState.Connection.FailedConnected("Falha"))
         runCurrent()
 
         val state = viewModel.state.value

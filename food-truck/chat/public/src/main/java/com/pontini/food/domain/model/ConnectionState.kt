@@ -6,7 +6,7 @@ sealed class ConnectionState {
     sealed class Connection : ConnectionState() {
         data object Connecting : Connection()
         data object Connected : Connection()
-        data class Error(val message: String) : Connection()
+        data class FailedConnected(val message: String) : Connection()
     }
 
     sealed class Data : ConnectionState() {

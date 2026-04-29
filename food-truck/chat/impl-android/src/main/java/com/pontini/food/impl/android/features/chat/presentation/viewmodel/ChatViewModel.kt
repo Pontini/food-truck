@@ -62,7 +62,7 @@ class ChatViewModel(
                         }
                     }
 
-                    is ConnectionState.Connection.Error -> {
+                    is ConnectionState.Connection.FailedConnected -> {
                         setState {
                             it.copy(
                                 isConnecting = false,
