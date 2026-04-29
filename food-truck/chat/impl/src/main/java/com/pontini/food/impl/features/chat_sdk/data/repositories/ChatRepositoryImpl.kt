@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.onEach
 
 class ChatRepositoryImpl(
     private val local: ChatLocalDataSource,
-    private val remote: ChatRemoteDataSource
+    private val remote: ChatRemoteDataSource,
 ) : ChatRepository {
 
     override suspend fun connect() {
@@ -37,7 +37,6 @@ class ChatRepositoryImpl(
     }
 
     override fun getMessagesById(conversationId: String): Flow<List<Message>> {
-
         remote.events
             .mapNotNull { event ->
                 (event as? ConnectionState.Data.MessageReceived)?.message
