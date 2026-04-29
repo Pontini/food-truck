@@ -13,8 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
-
-
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsIntent
@@ -38,14 +36,12 @@ fun ConversationsScreen(
         Box(modifier = Modifier.weight(1f)) {
 
             when {
-                // 🔥 1. Loading inicial (sem dados)
                 state.isLoading && state.conversations.isEmpty() -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
-                // 🔥 2. Erro sem dados
                 state.error != null && state.conversations.isEmpty() -> {
                     ErrorView(
                         message = state.error ?: "Ocorreu um erro",
@@ -55,7 +51,6 @@ fun ConversationsScreen(
                     )
                 }
 
-                // 🔥 3. Sem dados offline
                 state.conversations.isEmpty() -> {
                     Text(
                         text = "Sem dados offline",
@@ -63,7 +58,6 @@ fun ConversationsScreen(
                     )
                 }
 
-                // 🔥 4. Lista (principal)
                 else -> {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize()
@@ -78,7 +72,6 @@ fun ConversationsScreen(
                 }
             }
 
-            // 🔥 5. Loading overlay (quando já tem dados)
             if (state.isLoading && state.conversations.isNotEmpty()) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.TopCenter)

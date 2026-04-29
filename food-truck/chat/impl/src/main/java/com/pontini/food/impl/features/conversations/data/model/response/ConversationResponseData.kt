@@ -1,4 +1,4 @@
-package com.pontini.food.impl.data.model.response
+package com.pontini.food.impl.features.conversations.data.model.response
 
 import kotlinx.serialization.Serializable
 

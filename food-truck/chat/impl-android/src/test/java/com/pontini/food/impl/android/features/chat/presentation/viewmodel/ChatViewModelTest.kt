@@ -49,7 +49,7 @@ class ChatViewModelTest {
         val messagesFlow = MutableSharedFlow<List<Message>>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns messagesFlow
-        coEvery { chatManager.getConnectionStatus() } returns emptyFlow()
+        coEvery { chatManager.getConnection() } returns emptyFlow()
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
@@ -79,7 +79,7 @@ class ChatViewModelTest {
         val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns connectionFlow
+        coEvery { chatManager.getConnection() } returns connectionFlow
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
@@ -98,12 +98,12 @@ class ChatViewModelTest {
         val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns connectionFlow
+        coEvery { chatManager.getConnection() } returns connectionFlow
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.Error("Falha"))
+        connectionFlow.emit(ConnectionState.Connection.FailedConnected("Falha"))
         runCurrent()
 
         val state = viewModel.state.value
@@ -117,7 +117,7 @@ class ChatViewModelTest {
         val conversationId = "123"
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns emptyFlow()
+        coEvery { chatManager.getConnection() } returns emptyFlow()
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()

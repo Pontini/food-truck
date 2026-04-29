@@ -12,5 +12,5 @@ interface ChatRepository {
 
     fun getMessagesById(conversationId: String): Flow<List<Message>>
 
-    fun observeConnection(): Flow<ConnectionState>
+    fun getConnection(): Flow<ConnectionState>
 }

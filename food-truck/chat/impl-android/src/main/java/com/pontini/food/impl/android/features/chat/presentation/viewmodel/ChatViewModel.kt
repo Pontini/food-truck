@@ -42,7 +42,7 @@ class ChatViewModel(
 
     private fun observeConnection() {
         viewModelScope.launch {
-            chatManager.getConnectionStatus().collect { state ->
+            chatManager.getConnection().collect { state ->
                 when (state) {
                     is ConnectionState.Connection.Connecting -> {
                         setState {
@@ -62,7 +62,7 @@ class ChatViewModel(
                         }
                     }
 
-                    is ConnectionState.Connection.Error -> {
+                    is ConnectionState.Connection.FailedConnected -> {
                         setState {
                             it.copy(
                                 isConnecting = false,
