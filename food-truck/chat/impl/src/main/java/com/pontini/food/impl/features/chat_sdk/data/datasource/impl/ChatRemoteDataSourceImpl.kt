@@ -1,6 +1,7 @@
 package com.pontini.food.impl.features.chat_sdk.data.datasource.impl
 
 import com.pontini.food.domain.model.ConnectionState
+import com.pontini.food.domain.model.Message
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessageMapper
 import com.pontini.food.impl.features.chat_sdk.domain.model.SendMessageException
@@ -12,6 +13,8 @@ import io.ktor.websocket.Frame
 import io.ktor.websocket.readText
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.concurrent.atomic.AtomicBoolean
 
 class ChatRemoteDataSourceImpl(
     private val client: HttpClient,
@@ -21,83 +24,66 @@ class ChatRemoteDataSourceImpl(
 
     private var lastConversationID: String = ""
 
-    private val _events =
-        MutableSharedFlow<ConnectionState>(extraBufferCapacity = 64, replay = 1)
+    private val _connectionState =
+        MutableStateFlow<ConnectionState.Connection>(ConnectionState.Connection.Init)
 
-    override val events: Flow<ConnectionState> = _events
+    override val connectionState: Flow<ConnectionState.Connection> = _connectionState
+
+    private val _messages = MutableSharedFlow<Message>(
+        extraBufferCapacity = 64
+    )
+
+    override val messages: Flow<Message> = _messages
 
     private var session: DefaultClientWebSocketSession? = null
-    private var isConnected = false
+
+    private val isConnected = AtomicBoolean(false)
 
     override suspend fun connect() {
-        if (isConnected) {
-            observabilityFacade.log(
-                "ws_already_connected",
-                mapOf("conversationId" to lastConversationID)
-            )
+        if (!isConnected.compareAndSet(false, true)) {
+            observabilityFacade.log("ws_already_connected")
             return
         }
 
-        isConnected = true
+        observabilityFacade.log("ws_connecting")
 
-        observabilityFacade.log("ws_connect_start")
-
-        _events.tryEmit(ConnectionState.Connection.Connecting)
+        _connectionState.value = ConnectionState.Connection.Connecting
 
         try {
             client.webSocket("wss://ws.postman-echo.com/raw") {
 
                 session = this
 
-                observabilityFacade.log("ws_connected_success")
+                observabilityFacade.log("ws_connected")
 
-                observabilityFacade.metric(
-                    name = "ws_connection_success",
-                    value = 1.0
-                )
+                observabilityFacade.metric("ws_connection_success", 1.0)
 
-                _events.tryEmit(ConnectionState.Connection.Connected)
+                _connectionState.value = ConnectionState.Connection.Connected
 
-                while (true) {
-                    val frame = incoming.receive()
+                for (frame in incoming) {
                     val text = (frame as? Frame.Text)?.readText() ?: continue
 
-                    observabilityFacade.log(
-                        "ws_message_received_raw",
-                        mapOf("payload_size" to text.length)
-                    )
+                    observabilityFacade.log("ws_message_received")
 
                     val message = webSocketDataToMessageMapper.map(
                         text,
                         conversationID = lastConversationID
                     )
 
-                    observabilityFacade.log(
-                        "ws_message_mapped",
-                        mapOf("message_length" to message.text.length)
-                    )
-
-                    _events.tryEmit(ConnectionState.Data.MessageReceived(message))
+                    _messages.tryEmit(message)
                 }
             }
         } catch (e: Exception) {
-            isConnected = false
+            isConnected.set(false)
 
-            observabilityFacade.log(
-                "ws_connection_error",
-                mapOf("error" to (e.message ?: "unknown"))
-            )
+            observabilityFacade.log("ws_connection_failed")
 
-            observabilityFacade.metric(
-                name = "ws_connection_failed",
-                value = 1.0
-            )
+            observabilityFacade.metric("ws_connection_failed", 1.0)
 
             observabilityFacade.error(e)
 
-            _events.tryEmit(
+            _connectionState.value =
                 ConnectionState.Connection.FailedConnected(e.message ?: "Erro")
-            )
         }
     }
 
@@ -106,33 +92,18 @@ class ChatRemoteDataSourceImpl(
 
         val currentSession = requireSession() ?: return
 
-        observabilityFacade.log(
-            "ws_send_message",
-            mapOf(
-                "conversationId" to conversationId,
-                "message_length" to message.length
-            )
-        )
+        observabilityFacade.log("ws_send_message")
 
         try {
             currentSession.send(Frame.Text(message))
 
-            observabilityFacade.metric(
-                name = "ws_send_success",
-                value = 1.0
-            )
+            observabilityFacade.metric("ws_send_success", 1.0)
 
         } catch (e: Exception) {
 
-            observabilityFacade.log(
-                "ws_send_error",
-                mapOf("error" to (e.message ?: "unknown"))
-            )
+            observabilityFacade.log("ws_send_failed")
 
-            observabilityFacade.metric(
-                name = "ws_send_failed",
-                value = 1.0
-            )
+            observabilityFacade.metric("ws_send_failed", 1.0)
 
             observabilityFacade.error(e)
 
@@ -144,7 +115,7 @@ class ChatRemoteDataSourceImpl(
         val current = session
 
         if (current == null) {
-            observabilityFacade.log("ws_no_active_session")
+            observabilityFacade.log("ws_no_session")
             return null
         }
 

@@ -51,10 +51,7 @@ class ChatRepositoryImpl(
         val localFlow = local.getMessages(conversationId)
 
         val remoteSyncFlow = flow<Nothing> {
-            remote.events
-                .mapNotNull { event ->
-                    (event as? ConnectionState.Data.MessageReceived)?.message
-                }
+            remote.messages
                 .collect { message ->
                     local.insert(
                         SendMessageRequest(
@@ -69,8 +66,7 @@ class ChatRepositoryImpl(
         return merge(localFlow, remoteSyncFlow)
     }
 
-    override fun getConnection(): Flow<ConnectionState> {
-        return remote.events
-            .filterIsInstance<ConnectionState.Connection>()
+    override fun getConnection(): Flow<ConnectionState.Connection> {
+        return remote.connectionState
     }
 }

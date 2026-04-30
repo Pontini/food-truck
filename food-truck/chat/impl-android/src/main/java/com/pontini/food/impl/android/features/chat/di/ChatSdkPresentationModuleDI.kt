@@ -28,7 +28,7 @@ val chatSdkPresentationModule = module {
         MessageToEntityMapper()
     }
 
-    factory<ChatManager> {
+    single<ChatManager> {
         ChatManagerImpl(
             context = androidContext(),
             chatRepository = get(),

@@ -37,13 +37,11 @@ class ChatManagerImpl(
             observability.event("chat_network_available")
 
             observability.log(
-                "Network available - triggering reconnect",
+                "chat_network_available_reconnect",
                 mapOf(
-                    "action" to "connect",
                     "previous_state" to isConnected.get()
                 )
             )
-
             connect()
         }
     }
@@ -54,7 +52,7 @@ class ChatManagerImpl(
         observability.event("chat_manager_initialized")
 
         observability.log(
-            "ChatManager initialized",
+            "chat_manager_initialized",
             mapOf(
                 "thread" to Thread.currentThread().name
             )
@@ -65,7 +63,7 @@ class ChatManagerImpl(
         observability.event("chat_foreground")
 
         observability.log(
-            "App moved to foreground",
+            "chat_foreground",
             mapOf(
                 "action" to "register_network_callback",
                 "thread" to Thread.currentThread().name
@@ -81,7 +79,7 @@ class ChatManagerImpl(
         observability.event("chat_background")
 
         observability.log(
-            "App moved to background",
+            "chat_background",
             mapOf(
                 "action" to "cleanup",
                 "cancel_scope" to true
@@ -100,17 +98,16 @@ class ChatManagerImpl(
 
         if (!didAcquire) {
             observability.log(
-                "Connect skipped",
+                "chat_connect_skipped",
                 mapOf(
-                    "reason" to "already_connected",
-                    "state" to true
+                    "reason" to "already_connected"
                 )
             )
             return
         }
 
         observability.log(
-            "Starting chat connection",
+            "chat_connect_start",
             mapOf(
                 "thread" to Thread.currentThread().name
             )
@@ -121,21 +118,26 @@ class ChatManagerImpl(
                 chatRepository.connect()
 
                 observability.log(
-                    "Chat connection established",
-                    mapOf(
-                        "state" to "connected"
-                    )
+                    "chat_connect_success"
                 )
 
             } catch (e: Exception) {
                 isConnected.set(false)
+
+                observability.log(
+                    "chat_connect_error",
+                    mapOf(
+                        "error" to (e.message ?: "unknown")
+                    )
+                )
+
                 observability.error(
                     e,
                     mapOf(
-                        "stage" to "connect",
-                        "action" to "reset_connection_flag"
+                        "stage" to "connect"
                     )
                 )
+
                 throw e
             }
         }
@@ -143,9 +145,9 @@ class ChatManagerImpl(
 
     override suspend fun sendMessage(message: String, conversationId: String) {
         observability.log(
-            "Sending message",
+            "chat_send_message",
             mapOf(
-                "conversationId" to conversationId,
+                "conversation_id" to conversationId,
                 "message_size" to message.length
             )
         )
@@ -155,18 +157,16 @@ class ChatManagerImpl(
 
     override fun getMessagesById(conversationId: String): Flow<List<Message>> {
         observability.log(
-            "Start observing messages",
+            "chat_observe_messages",
             mapOf(
-                "conversationId" to conversationId
+                "conversation_id" to conversationId
             )
         )
         return chatRepository.getMessagesById(conversationId)
     }
 
     override fun getConnection(): Flow<ConnectionState> {
-        observability.log(
-            "Start observing connection state"
-        )
+        observability.log("chat_observe_connection")
         return chatRepository.getConnection()
     }
 }
