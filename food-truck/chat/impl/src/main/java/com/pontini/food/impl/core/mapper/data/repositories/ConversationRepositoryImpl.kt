@@ -1,10 +1,9 @@
-package com.pontini.food.impl.features.data.repositories
+package com.pontini.food.impl.core.mapper.data.repositories
 
-import com.pontini.food.impl.features.conversations.domain.model.ConversationResult
-import com.pontini.food.impl.features.conversations.domain.model.Source
-import com.pontini.food.impl.features.conversations.domain.repoistories.ConversationRepository
-import com.pontini.food.impl.features.data.datasource.ConversationLocalDataSource
-import com.pontini.food.impl.features.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.core.mapper.data.datasource.ConversationLocalDataSource
+import com.pontini.food.impl.core.mapper.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.core.mapper.domain.model.ConversationResult
+import com.pontini.food.impl.core.mapper.domain.model.Source
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.onStart
 class ConversationRepositoryImpl(
     private val remote: ConversationRemoteDataSource,
     private val local: ConversationLocalDataSource,
-) : ConversationRepository {
+) : com.pontini.food.impl.core.mapper.domain.repositories.ConversationRepository {
 
     override fun getConversations(): Flow<ConversationResult> = flow {
         emit(ConversationResult.Loading)

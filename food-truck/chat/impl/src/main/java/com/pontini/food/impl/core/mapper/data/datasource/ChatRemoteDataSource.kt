@@ -1,4 +1,4 @@
-package com.pontini.food.impl.features.data.datasource
+package com.pontini.food.impl.core.mapper.data.datasource
 
 import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
 import com.pontini.food.features.chat_sdk.domain.model.ConnectionState

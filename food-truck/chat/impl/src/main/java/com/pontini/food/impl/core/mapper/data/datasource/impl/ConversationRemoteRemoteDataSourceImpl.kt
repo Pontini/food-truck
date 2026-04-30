@@ -1,8 +1,7 @@
-package com.pontini.food.impl.features.data.datasource.impl
+package com.pontini.food.impl.core.mapper.data.datasource.impl
 
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
-import com.pontini.food.impl.features.data.datasource.ConversationRemoteDataSource
-import com.pontini.food.impl.features.data.model.response.ConversationResponseData
+import com.pontini.food.impl.core.mapper.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.core.mapper.domain.model.Conversation
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -14,7 +13,7 @@ class ConversationRemoteRemoteDataSourceImpl(
 ) : ConversationRemoteDataSource {
 
     override suspend fun getLastMessages(): List<Conversation> {
-        val response: List<ConversationResponseData> =
+        val response: List<com.pontini.food.impl.core.mapper.data.model.response.ConversationResponseData> =
             client.get(LAST_CONVERSATIONS_ENDPOINT).body()
         return response.map {
             Conversation(

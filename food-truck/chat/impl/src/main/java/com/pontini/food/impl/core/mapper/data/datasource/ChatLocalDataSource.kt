@@ -1,7 +1,7 @@
-package com.pontini.food.impl.features.chat_sdk.data.datasource
+package com.pontini.food.impl.core.mapper.data.datasource
 
 import com.pontini.food.features.conversations.Message
-import com.pontini.food.impl.features.data.model.request.SendMessageRequest
+import com.pontini.food.impl.core.mapper.data.model.request.SendMessageRequest
 import kotlinx.coroutines.flow.Flow
 
 interface ChatLocalDataSource {

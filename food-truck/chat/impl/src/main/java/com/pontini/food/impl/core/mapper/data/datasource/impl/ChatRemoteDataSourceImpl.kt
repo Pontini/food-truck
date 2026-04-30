@@ -1,8 +1,8 @@
-package com.pontini.food.impl.features.data.datasource.impl
+package com.pontini.food.impl.core.mapper.data.datasource.impl
 
 import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
 import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.impl.features.data.datasource.ChatRemoteDataSource
+import com.pontini.food.impl.core.mapper.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessageMapper
 import com.pontini.food.impl.features.chat_sdk.domain.model.excpetion.SendMessageException
 import com.pontini.food.observability.ObservabilityFacade

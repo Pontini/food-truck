@@ -6,8 +6,8 @@ import com.pontini.food.impl.android.features.conversations.data.datasource.impl
 import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationDomainToEntityMapper
 import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationEntityToDomainMapper
 import com.pontini.food.impl.android.features.conversations.data.model.room.ConversationEntity
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
-import com.pontini.food.impl.features.data.datasource.ConversationLocalDataSource
+import com.pontini.food.impl.core.mapper.data.datasource.ConversationLocalDataSource
+import com.pontini.food.impl.core.mapper.domain.model.Conversation
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

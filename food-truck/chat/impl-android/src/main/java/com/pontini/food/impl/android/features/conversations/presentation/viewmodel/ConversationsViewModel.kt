@@ -2,9 +2,8 @@ package com.pontini.food.impl.android.features.conversations.presentation.viewmo
 
 import androidx.lifecycle.viewModelScope
 import com.pontini.food.impl.android.core.presentation.viewmodel.BaseViewModel
-import com.pontini.food.impl.features.conversations.domain.model.ConversationResult
-import com.pontini.food.impl.features.conversations.domain.model.Source
-import com.pontini.food.impl.features.conversations.domain.repoistories.ConversationRepository
+import com.pontini.food.impl.core.mapper.domain.model.ConversationResult
+import com.pontini.food.impl.core.mapper.domain.repositories.ConversationRepository
 import kotlinx.coroutines.launch
 
 class ConversationsViewModel(

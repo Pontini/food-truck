@@ -1,4 +1,4 @@
-package com.pontini.food.impl.features.data.model.response
+package com.pontini.food.impl.core.mapper.data.model.response
 
 import kotlinx.serialization.Serializable
 

@@ -1,9 +1,9 @@
-package com.pontini.food.impl.features.chat_sdk.di
+package com.pontini.food.impl.core.mapper.di
 
-import com.pontini.food.impl.features.data.datasource.ChatRemoteDataSource
-import com.pontini.food.impl.features.data.datasource.impl.ChatRemoteDataSourceImpl
+import com.pontini.food.impl.core.mapper.data.datasource.ChatRemoteDataSource
+import com.pontini.food.impl.core.mapper.data.datasource.impl.ChatRemoteDataSourceImpl
 import com.pontini.food.impl.features.chat_sdk.data.mappers.WebSocketDataToMessageMapper
-import com.pontini.food.impl.features.chat_sdk.data.repositories.ChatRepositoryImpl
+import com.pontini.food.impl.core.mapper.data.repositories.ChatRepositoryImpl
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp

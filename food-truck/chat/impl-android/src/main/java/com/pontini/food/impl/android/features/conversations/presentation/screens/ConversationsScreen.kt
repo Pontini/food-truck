@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsIntent
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsViewModel
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
+import com.pontini.food.impl.core.mapper.domain.model.Conversation
 
 @Composable
 fun ConversationsScreen(

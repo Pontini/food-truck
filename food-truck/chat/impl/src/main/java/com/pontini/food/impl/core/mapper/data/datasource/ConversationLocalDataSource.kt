@@ -1,6 +1,6 @@
-package com.pontini.food.impl.features.data.datasource
+package com.pontini.food.impl.core.mapper.data.datasource
 
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
+import com.pontini.food.impl.core.mapper.domain.model.Conversation
 import kotlinx.coroutines.flow.Flow
 
 interface ConversationLocalDataSource {
