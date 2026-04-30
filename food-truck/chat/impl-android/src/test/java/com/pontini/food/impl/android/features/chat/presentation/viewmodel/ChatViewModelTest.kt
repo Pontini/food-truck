@@ -1,9 +1,9 @@
 package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.domain.model.ConnectionState
-import com.pontini.food.domain.model.Message
-import com.pontini.food.domain.model.TypeMessage
+import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
+import com.pontini.food.features.conversations.Message
+import com.pontini.food.features.conversations.TypeMessage
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

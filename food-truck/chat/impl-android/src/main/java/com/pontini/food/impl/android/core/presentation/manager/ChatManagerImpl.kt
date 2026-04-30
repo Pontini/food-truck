@@ -7,8 +7,8 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.domain.model.ConnectionState
-import com.pontini.food.domain.model.Message
+import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
+import com.pontini.food.features.conversations.Message
 import com.pontini.food.impl.features.chat_sdk.domain.repositories.ChatRepository
 import com.pontini.food.observability.ObservabilityFacade
 import kotlinx.coroutines.CoroutineScope

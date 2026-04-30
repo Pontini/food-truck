@@ -1,0 +1,7 @@
+package com.pontini.food.impl.features.data.model.request
+
+data class SendMessageRequest(
+    val message: String,
+    val conversationId: String,
+    val isSent: Boolean
+)

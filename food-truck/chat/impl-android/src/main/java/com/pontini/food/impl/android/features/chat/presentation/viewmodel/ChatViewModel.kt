@@ -2,7 +2,7 @@ package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.domain.model.ConnectionState
+import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
 import com.pontini.food.impl.android.core.presentation.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
 
@@ -44,7 +44,7 @@ class ChatViewModel(
         viewModelScope.launch {
             chatManager.getConnection().collect { state ->
                 when (state) {
-                    is ConnectionState.Connection.Connecting -> {
+                    is ConnectionState.Connecting -> {
                         setState {
                             it.copy(
                                 isConnecting = true,
@@ -53,7 +53,7 @@ class ChatViewModel(
                         }
                     }
 
-                    is ConnectionState.Connection.Connected -> {
+                    is ConnectionState.Connected -> {
                         setState {
                             it.copy(
                                 isConnecting = false,
@@ -62,7 +62,7 @@ class ChatViewModel(
                         }
                     }
 
-                    is ConnectionState.Connection.FailedConnected -> {
+                    is ConnectionState.FailedConnected -> {
                         setState {
                             it.copy(
                                 isConnecting = false,

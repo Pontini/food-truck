@@ -11,7 +11,7 @@ import com.pontini.food.impl.android.features.chat.presentation.viewmodel.ChatVi
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsViewModel
 import com.pontini.food.impl.android.observability.ObservabilityFacadeImpl
 import com.pontini.food.impl.features.chat_sdk.data.datasource.ChatLocalDataSource
-import com.pontini.food.impl.features.chat_sdk.data.model.request.SendMessageRequest
+import com.pontini.food.impl.features.data.model.request.SendMessageRequest
 import com.pontini.food.mapper.Mapper
 import com.pontini.food.observability.ObservabilityFacade
 import org.koin.android.ext.koin.androidContext

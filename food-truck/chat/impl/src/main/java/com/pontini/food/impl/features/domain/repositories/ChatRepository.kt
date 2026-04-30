@@ -1,11 +1,16 @@
-package com.pontini.food.android.manager
+package com.pontini.food.impl.features.chat_sdk.domain.repositories
 
 import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import kotlinx.coroutines.flow.Flow
 import com.pontini.food.features.conversations.Message
+import kotlinx.coroutines.flow.Flow
 
-interface ChatManager{
+interface ChatRepository {
+
+    suspend fun connect()
+
     suspend fun sendMessage(message: String,conversationId:String)
+
     fun getMessagesById(conversationId: String): Flow<List<Message>>
+
     fun getConnection(): Flow<ConnectionState>
 }

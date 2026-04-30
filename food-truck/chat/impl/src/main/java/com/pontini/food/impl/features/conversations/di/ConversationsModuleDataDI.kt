@@ -1,9 +1,9 @@
 package com.pontini.food.impl.features.conversations.di
 
-import com.pontini.food.impl.features.conversations.data.datasource.ConversationRemoteDataSource
-import com.pontini.food.impl.features.conversations.data.datasource.impl.ConversationRemoteRemoteDataSourceImpl
-import com.pontini.food.impl.features.conversations.data.repositories.ConversationRepositoryImpl
 import com.pontini.food.impl.features.conversations.domain.repoistories.ConversationRepository
+import com.pontini.food.impl.features.data.datasource.ConversationRemoteDataSource
+import com.pontini.food.impl.features.data.datasource.impl.ConversationRemoteRemoteDataSourceImpl
+import com.pontini.food.impl.features.data.repositories.ConversationRepositoryImpl
 import org.koin.dsl.module
 
 val conversationsModuleData = module {
