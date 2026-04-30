@@ -4,6 +4,8 @@ import com.pontini.food.android.manager.ChatManager
 import com.pontini.food.domain.models.ConnectionStatus
 import com.pontini.food.features.domain.models.Message
 import com.pontini.food.features.domain.models.TypeMessage
+import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatIntent
+import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

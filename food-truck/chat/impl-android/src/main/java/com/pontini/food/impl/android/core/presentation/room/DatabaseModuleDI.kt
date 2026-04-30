@@ -3,10 +3,10 @@ package com.pontini.food.impl.android.core.presentation.room
 import androidx.room.Room
 import com.pontini.food.core.mapper.Mapper
 import com.pontini.food.domain.models.Conversation
-import com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.ConversationLocalDataSourceImpl
-import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationDomainToEntityMapper
-import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationEntityToDomainMapper
-import com.pontini.food.impl.android.features.conversations.data.model.room.ConversationEntity
+import com.pontini.food.impl.android.data.datasource.impl.local.ConversationLocalDataSourceImpl
+import com.pontini.food.impl.android.data.datasource.mappers.ConversationDomainToEntityMapper
+import com.pontini.food.impl.android.data.datasource.mappers.ConversationEntityToDomainMapper
+import com.pontini.food.impl.android.data.model.room.ConversationEntity
 import com.pontini.food.impl.data.datasource.ConversationLocalDataSource
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
