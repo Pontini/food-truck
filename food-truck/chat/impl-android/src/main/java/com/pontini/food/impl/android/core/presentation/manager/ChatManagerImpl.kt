@@ -7,9 +7,9 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.features.conversations.Message
-import com.pontini.food.impl.domain.repositories.ChatRepository
+import com.pontini.food.domain.repositories.ChatRepository
+import com.pontini.food.domain.models.ConnectionStatus
+import com.pontini.food.features.domain.models.Message
 import com.pontini.food.observability.ObservabilityFacade
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -165,7 +165,7 @@ class ChatManagerImpl(
         return chatRepository.getMessagesById(conversationId)
     }
 
-    override fun getConnection(): Flow<ConnectionState> {
+    override fun getConnection(): Flow<ConnectionStatus> {
         observability.log("chat_observe_connection")
         return chatRepository.getConnection()
     }

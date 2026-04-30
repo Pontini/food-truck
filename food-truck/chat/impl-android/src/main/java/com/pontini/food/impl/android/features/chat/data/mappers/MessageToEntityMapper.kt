@@ -2,7 +2,7 @@ package com.pontini.food.impl.android.features.chat.data.mappers
 
 import com.pontini.food.impl.android.features.chat.data.model.room.MessageEntity
 import com.pontini.food.impl.data.model.request.SendMessageRequest
-import com.pontini.food.mapper.Mapper
+import com.pontini.food.core.mapper.Mapper
 import java.util.UUID
 
 class MessageToEntityMapper : Mapper<SendMessageRequest, MessageEntity> {

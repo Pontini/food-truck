@@ -1,9 +1,9 @@
 package com.pontini.food.impl.di
 
+import com.pontini.food.domain.repositories.ConversationRepository
 import com.pontini.food.impl.data.datasource.ConversationRemoteDataSource
 import com.pontini.food.impl.data.datasource.impl.ConversationRemoteRemoteDataSourceImpl
 import com.pontini.food.impl.data.repositories.ConversationRepositoryImpl
-import com.pontini.food.impl.domain.repositories.ConversationRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob

@@ -1,6 +1,6 @@
 package com.pontini.food.impl.data.datasource
 
-import com.pontini.food.features.conversations.Message
+import com.pontini.food.features.domain.models.Message
 import com.pontini.food.impl.data.model.request.SendMessageRequest
 import kotlinx.coroutines.flow.Flow
 

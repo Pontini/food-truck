@@ -1,15 +1,15 @@
 package com.pontini.food.impl.data.repositories
 
-import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.features.conversations.Message
-import com.pontini.food.features.conversations.TypeMessage
+import com.pontini.food.domain.models.ChatEvent
+import com.pontini.food.domain.repositories.ChatRepository
+import com.pontini.food.domain.models.ConnectionStatus
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
 import com.pontini.food.impl.core.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.data.model.request.SendMessageRequest
 import com.pontini.food.impl.data.datasource.ChatLocalDataSource
 import com.pontini.food.impl.core.mapper.domain.model.excpetion.FailedSaveMessageException
 import com.pontini.food.impl.core.mapper.domain.model.excpetion.SendMessageException
-import com.pontini.food.impl.domain.repositories.ChatRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flow
@@ -63,7 +63,7 @@ class ChatRepositoryImpl(
         return merge(localFlow, remoteSyncFlow)
     }
 
-    override fun getConnection(): Flow<ConnectionState> {
-        return remote.connectionState
+    override fun getConnection(): Flow<ConnectionStatus> {
+        return remote.connectionStatus
     }
 }

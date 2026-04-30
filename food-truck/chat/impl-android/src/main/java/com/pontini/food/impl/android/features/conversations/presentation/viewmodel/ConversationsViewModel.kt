@@ -1,8 +1,8 @@
 package com.pontini.food.impl.android.features.conversations.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.pontini.food.domain.repositories.ConversationRepository
 import com.pontini.food.impl.android.core.presentation.viewmodel.BaseViewModel
-import com.pontini.food.impl.domain.repositories.ConversationRepository
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 

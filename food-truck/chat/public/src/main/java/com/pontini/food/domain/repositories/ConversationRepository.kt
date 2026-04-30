@@ -1,6 +1,6 @@
-package com.pontini.food.impl.domain.repositories
+package com.pontini.food.domain.repositories
 
-import com.pontini.food.impl.domain.model.ConversationResult
+import com.pontini.food.domain.models.ConversationResult
 import kotlinx.coroutines.flow.Flow
 
 interface ConversationRepository {

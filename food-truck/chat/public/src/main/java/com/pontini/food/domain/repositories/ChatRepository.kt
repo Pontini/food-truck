@@ -1,7 +1,7 @@
-package com.pontini.food.impl.domain.repositories
+package com.pontini.food.domain.repositories
 
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.features.conversations.Message
+import com.pontini.food.domain.models.ConnectionStatus
+import com.pontini.food.features.domain.models.Message
 import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
@@ -12,5 +12,5 @@ interface ChatRepository {
 
     fun getMessagesById(conversationId: String): Flow<List<Message>>
 
-    fun getConnection(): Flow<ConnectionState>
+    fun getConnection(): Flow<ConnectionStatus>
 }

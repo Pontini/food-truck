@@ -1,13 +1,13 @@
 package com.pontini.food.impl.android.features.chat.data.datasource.impl.local
 
-import com.pontini.food.features.conversations.Message
-import com.pontini.food.features.conversations.TypeMessage
 import com.pontini.food.impl.android.features.chat.data.datasource.impl.local.room.MessageDao
 import com.pontini.food.impl.android.features.chat.data.model.room.MessageEntity
 import com.pontini.food.impl.data.model.request.SendMessageRequest
 import com.pontini.food.impl.data.datasource.ChatLocalDataSource
 import com.pontini.food.impl.core.mapper.domain.model.excpetion.FailedSaveMessageException
-import com.pontini.food.mapper.Mapper
+import com.pontini.food.core.mapper.Mapper
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

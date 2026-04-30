@@ -12,7 +12,7 @@ import com.pontini.food.impl.android.features.conversations.presentation.viewmod
 import com.pontini.food.impl.android.observability.ObservabilityFacadeImpl
 import com.pontini.food.impl.data.datasource.ChatLocalDataSource
 import com.pontini.food.impl.data.model.request.SendMessageRequest
-import com.pontini.food.mapper.Mapper
+import com.pontini.food.core.mapper.Mapper
 import com.pontini.food.observability.ObservabilityFacade
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

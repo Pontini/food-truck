@@ -1,10 +1,10 @@
 package com.pontini.food.impl.data.repositories
 
+import com.pontini.food.domain.models.ConversationResult
+import com.pontini.food.domain.models.Source
+import com.pontini.food.domain.repositories.ConversationRepository
 import com.pontini.food.impl.data.datasource.ConversationLocalDataSource
 import com.pontini.food.impl.data.datasource.ConversationRemoteDataSource
-import com.pontini.food.impl.domain.model.ConversationResult
-import com.pontini.food.impl.domain.model.Source
-import com.pontini.food.impl.domain.repositories.ConversationRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

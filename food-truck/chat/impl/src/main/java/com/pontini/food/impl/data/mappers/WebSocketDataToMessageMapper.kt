@@ -1,8 +1,8 @@
 package com.pontini.food.impl.data.mappers
 
-import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
-import com.pontini.food.features.conversations.Message
-import com.pontini.food.features.conversations.TypeMessage
+import com.pontini.food.domain.models.ChatEvent
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
 import java.util.UUID
 
 class WebSocketDataToMessageMapper  {
@@ -11,7 +11,7 @@ class WebSocketDataToMessageMapper  {
             Message(
             id = UUID.randomUUID().toString(),
             text = from,
-            conversationId =conversationID,
+            conversationId = conversationID,
             senderName = "Server",
             timestamp = System.currentTimeMillis(),
             typeMessage = TypeMessage.RECEIVED

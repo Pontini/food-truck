@@ -1,6 +1,7 @@
 package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
-import com.pontini.food.features.conversations.Message
+import com.pontini.food.features.domain.models.Message
+
 
 data class ChatState(
     val messages: List<Message> = emptyList(),

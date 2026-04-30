@@ -15,9 +15,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.pontini.food.domain.models.Conversation
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsIntent
 import com.pontini.food.impl.android.features.conversations.presentation.viewmodel.ConversationsViewModel
-import com.pontini.food.impl.domain.model.Conversation
 
 @Composable
 fun ConversationsScreen(

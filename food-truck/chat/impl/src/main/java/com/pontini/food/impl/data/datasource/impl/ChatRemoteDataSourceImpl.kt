@@ -1,7 +1,7 @@
 package com.pontini.food.impl.data.datasource.impl
 
-import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
+import com.pontini.food.domain.models.ChatEvent
+import com.pontini.food.domain.models.ConnectionStatus
 import com.pontini.food.impl.core.data.datasource.ChatRemoteDataSource
 import com.pontini.food.impl.data.mappers.WebSocketDataToMessageMapper
 import com.pontini.food.impl.core.mapper.domain.model.excpetion.SendMessageException
@@ -24,10 +24,10 @@ class ChatRemoteDataSourceImpl(
 
     private var lastConversationID: String = ""
 
-    private val _connectionState =
-        MutableStateFlow<ConnectionState>(ConnectionState.Init)
+    private val _connectionStatus =
+        MutableStateFlow<ConnectionStatus>(ConnectionStatus.Init)
 
-    override val connectionState: Flow<ConnectionState> = _connectionState
+    override val connectionStatus: Flow<ConnectionStatus> = _connectionStatus
 
     private val _chatEvent = MutableSharedFlow<ChatEvent>(
         extraBufferCapacity = 64
@@ -47,7 +47,7 @@ class ChatRemoteDataSourceImpl(
 
         observabilityFacade.log("ws_connecting")
 
-        _connectionState.value = ConnectionState.Connecting
+        _connectionStatus.value = ConnectionStatus.Connecting
 
         try {
             client.webSocket("wss://ws.postman-echo.com/raw") {
@@ -58,7 +58,7 @@ class ChatRemoteDataSourceImpl(
 
                 observabilityFacade.metric("ws_connection_success", 1.0)
 
-                _connectionState.value = ConnectionState.Connected
+                _connectionStatus.value = ConnectionStatus.Connected
 
                 for (frame in incoming) {
                     val text = (frame as? Frame.Text)?.readText() ?: continue
@@ -82,8 +82,8 @@ class ChatRemoteDataSourceImpl(
 
             observabilityFacade.error(e)
 
-            _connectionState.value =
-                ConnectionState.FailedConnected(e.message ?: "Erro")
+            _connectionStatus.value =
+                ConnectionStatus.FailedConnected(e.message ?: "Erro")
         }
     }
 

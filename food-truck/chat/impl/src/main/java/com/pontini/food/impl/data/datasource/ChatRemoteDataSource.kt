@@ -1,7 +1,7 @@
 package com.pontini.food.impl.core.data.datasource
 
-import com.pontini.food.features.chat_sdk.domain.model.ChatEvent
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
+import com.pontini.food.domain.models.ChatEvent
+import com.pontini.food.domain.models.ConnectionStatus
 import kotlinx.coroutines.flow.Flow
 
 interface ChatRemoteDataSource {
@@ -10,7 +10,7 @@ interface ChatRemoteDataSource {
 
     suspend fun send(message: String, conversationId: String)
 
-    val connectionState: Flow<ConnectionState>
+    val connectionStatus: Flow<ConnectionStatus>
 
     val chatEvent: Flow<ChatEvent>
 }

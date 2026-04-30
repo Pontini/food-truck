@@ -1,9 +1,9 @@
 package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.features.chat_sdk.domain.model.ConnectionState
-import com.pontini.food.features.conversations.Message
-import com.pontini.food.features.conversations.TypeMessage
+import com.pontini.food.domain.models.ConnectionStatus
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -76,7 +76,7 @@ class ChatViewModelTest {
     @Test
     fun `should update connection state to connected`() = runTest {
         val conversationId = "123"
-        val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
+        val connectionFlow = MutableSharedFlow<ConnectionStatus>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
         coEvery { chatManager.getConnection() } returns connectionFlow
@@ -84,7 +84,7 @@ class ChatViewModelTest {
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.Connected)
+        connectionFlow.emit(ConnectionStatus.Connected)
         runCurrent()
 
         val state = viewModel.state.value
@@ -95,7 +95,7 @@ class ChatViewModelTest {
     @Test
     fun `should update error when connection fails`() = runTest {
         val conversationId = "123"
-        val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
+        val connectionFlow = MutableSharedFlow<ConnectionStatus>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
         coEvery { chatManager.getConnection() } returns connectionFlow
@@ -103,7 +103,7 @@ class ChatViewModelTest {
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.FailedConnected("Falha"))
+        connectionFlow.emit(ConnectionStatus.FailedConnected("Falha"))
         runCurrent()
 
         val state = viewModel.state.value

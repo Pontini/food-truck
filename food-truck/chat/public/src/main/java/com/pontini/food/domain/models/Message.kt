@@ -1,4 +1,4 @@
-package com.pontini.food.features.conversations
+package com.pontini.food.features.domain.models
 
 data class Message(
     val id: String,
