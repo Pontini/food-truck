@@ -25,7 +25,6 @@ val externalModules = module {
             .build()
     }
 
-    // 📦 DAO
     single {
         get<AppDatabase>().conversationDao()
     }
