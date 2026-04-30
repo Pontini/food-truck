@@ -2,8 +2,8 @@ package com.pontini.food.impl.android.features.conversations.presentation.viewmo
 
 import androidx.lifecycle.viewModelScope
 import com.pontini.food.impl.android.core.presentation.viewmodel.BaseViewModel
-import com.pontini.food.impl.core.mapper.domain.model.ConversationResult
-import com.pontini.food.impl.core.mapper.domain.repositories.ConversationRepository
+import com.pontini.food.impl.domain.repositories.ConversationRepository
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 class ConversationsViewModel(
@@ -17,45 +17,47 @@ class ConversationsViewModel(
     }
 
     private fun onInit() {
+        println("LOADING CONVERSATIONS")
         viewModelScope.launch {
-            repository.getConversations().collect { result ->
+            setState { state ->
+                state.copy(
+                    isLoading = true,
+                    error = null
+                )
+            }
+            repository.getConversations().catch {
+                println("LOADING CONVERSATIONS ERROR "+it.message)
+
                 setState { state ->
-                    when (result) {
-                        is ConversationResult.Loading -> {
-                            state.copy(
-                                isLoading = true,
-                                error = null
-                            )
-                        }
-                        is ConversationResult.Success -> {
-                            val hasData = result.data.isNotEmpty()
+                    state.copy(
+                        isLoading = false,
+                        connectionStatus = when {
+                            state.conversations.isNotEmpty() ->
+                                ConnectionStatus.OfflineWithCache
 
-                            val connectionStatus = when {
-                                hasData && !state.isLoading -> ConnectionStatus.Online
-                                hasData -> ConnectionStatus.OfflineWithCache
-                                else -> ConnectionStatus.OfflineNoData
-                            }
+                            else ->
+                                ConnectionStatus.OfflineNoData
+                        },
+                        error = it.message
+                    )
+                }
+            }.collect { result ->
+                println("LOADING CONVERSATIONS RESULT "+result.source)
 
-                            state.copy(
-                                conversations = result.data,
-                                isLoading = false,
-                                connectionStatus = connectionStatus,
-                                error = null
-                            )
-                        }
-                        is ConversationResult.Error -> {
-                            state.copy(
-                                isLoading = false,
-                                connectionStatus = when {
-                                    state.conversations.isNotEmpty() ->
-                                        ConnectionStatus.OfflineWithCache
-                                    else ->
-                                        ConnectionStatus.OfflineNoData
-                                },
-                                error = result.message
-                            )
-                        }
+                val hasData = result.data.isNotEmpty()
+                setState { state ->
+                    val connectionStatus = when {
+                        hasData && !state.isLoading -> ConnectionStatus.Online
+                        hasData -> ConnectionStatus.OfflineWithCache
+                        else -> ConnectionStatus.OfflineNoData
                     }
+
+                    state.copy(
+                        conversations = result.data,
+                        isLoading = false,
+                        connectionStatus = connectionStatus,
+                        error = null
+                    )
                 }
             }
         }

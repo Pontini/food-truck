@@ -1,6 +1,6 @@
 package com.pontini.food.impl.android.features.conversations.presentation.viewmodel
 
-import com.pontini.food.impl.core.mapper.domain.model.Conversation
+import com.pontini.food.impl.domain.model.Conversation
 
 
 data class ConversationsState(
