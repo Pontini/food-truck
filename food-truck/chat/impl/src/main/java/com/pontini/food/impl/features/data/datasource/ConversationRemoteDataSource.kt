@@ -1,4 +1,4 @@
-package com.pontini.food.impl.features.conversations.data.datasource
+package com.pontini.food.impl.features.data.datasource
 
 import com.pontini.food.impl.features.conversations.domain.model.Conversation
 
