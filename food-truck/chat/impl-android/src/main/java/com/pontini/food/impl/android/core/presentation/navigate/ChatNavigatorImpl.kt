@@ -6,8 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.pontini.food.android.navigate.ChatNavigator
-import com.pontini.food.impl.android.features.chat.presentation.screens.ChatScreen
-import com.pontini.food.impl.android.features.conversations.presentation.screens.ConversationsScreen
+import com.pontini.food.impl.android.presentation.chat.screens.ChatScreen
+import com.pontini.food.impl.android.presentation.conversation.screens.ConversationsScreen
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -36,7 +36,6 @@ class ChatNavigatorImpl : ChatNavigator {
         navGraphBuilder: NavGraphBuilder
     ) {
 
-        // 🟢 TELA DE CONVERSAS
         navGraphBuilder.composable(CONVERSATIONS_ROUTE) {
             ConversationsScreen(
                 onOpenChat = { conversation ->
@@ -49,7 +48,6 @@ class ChatNavigatorImpl : ChatNavigator {
             )
         }
 
-        // 💬 TELA DE CHAT
         navGraphBuilder.composable(
             route = CHAT_WITH_ARGS,
             arguments = listOf(

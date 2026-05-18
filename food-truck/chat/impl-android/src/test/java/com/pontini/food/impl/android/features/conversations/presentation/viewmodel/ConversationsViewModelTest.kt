@@ -1,8 +1,10 @@
 package com.pontini.food.impl.android.features.conversations.presentation.viewmodel
 
 import app.cash.turbine.test
+import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConnectionStatus
+import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConversationsIntent
+import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConversationsViewModel
 import com.pontini.food.impl.features.conversations.domain.model.*
-import com.pontini.food.impl.features.conversations.domain.repoistories.ConversationRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers

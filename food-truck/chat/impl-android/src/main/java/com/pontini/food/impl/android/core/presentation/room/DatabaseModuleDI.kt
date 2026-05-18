@@ -1,13 +1,13 @@
 package com.pontini.food.impl.android.core.presentation.room
 
 import androidx.room.Room
-import com.pontini.food.mapper.Mapper
-import com.pontini.food.impl.android.features.conversations.data.datasource.impl.local.ConversationLocalDataSourceImpl
-import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationDomainToEntityMapper
-import com.pontini.food.impl.android.features.conversations.data.datasource.mappers.ConversationEntityToDomainMapper
-import com.pontini.food.impl.android.features.conversations.data.model.room.ConversationEntity
-import com.pontini.food.impl.features.conversations.data.datasource.ConversationLocalDataSource
-import com.pontini.food.impl.features.conversations.domain.model.Conversation
+import com.pontini.food.core.mapper.Mapper
+import com.pontini.food.domain.models.Conversation
+import com.pontini.food.impl.android.data.datasource.impl.local.ConversationLocalDataSourceImpl
+import com.pontini.food.impl.android.data.datasource.mappers.ConversationDomainToEntityMapper
+import com.pontini.food.impl.android.data.datasource.mappers.ConversationEntityToDomainMapper
+import com.pontini.food.impl.android.data.model.room.ConversationEntity
+import com.pontini.food.impl.data.datasource.ConversationLocalDataSource
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -25,7 +25,6 @@ val externalModules = module {
             .build()
     }
 
-    // 📦 DAO
     single {
         get<AppDatabase>().conversationDao()
     }
@@ -48,5 +47,4 @@ val externalModules = module {
     single<Mapper<Conversation, ConversationEntity>>(DOMAIN_TO_ENTITY) {
         ConversationDomainToEntityMapper()
     }
-
 }

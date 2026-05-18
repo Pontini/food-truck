@@ -1,9 +1,11 @@
 package com.pontini.food.impl.android.features.chat.presentation.viewmodel
 
 import com.pontini.food.android.manager.ChatManager
-import com.pontini.food.domain.model.ConnectionState
-import com.pontini.food.domain.model.Message
-import com.pontini.food.domain.model.TypeMessage
+import com.pontini.food.domain.models.ConnectionStatus
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
+import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatIntent
+import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -49,7 +51,7 @@ class ChatViewModelTest {
         val messagesFlow = MutableSharedFlow<List<Message>>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns messagesFlow
-        coEvery { chatManager.getConnectionStatus() } returns emptyFlow()
+        coEvery { chatManager.getConnection() } returns emptyFlow()
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
@@ -76,15 +78,15 @@ class ChatViewModelTest {
     @Test
     fun `should update connection state to connected`() = runTest {
         val conversationId = "123"
-        val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
+        val connectionFlow = MutableSharedFlow<ConnectionStatus>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns connectionFlow
+        coEvery { chatManager.getConnection() } returns connectionFlow
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.Connected)
+        connectionFlow.emit(ConnectionStatus.Connected)
         runCurrent()
 
         val state = viewModel.state.value
@@ -95,15 +97,15 @@ class ChatViewModelTest {
     @Test
     fun `should update error when connection fails`() = runTest {
         val conversationId = "123"
-        val connectionFlow = MutableSharedFlow<ConnectionState>(replay = 1)
+        val connectionFlow = MutableSharedFlow<ConnectionStatus>(replay = 1)
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns connectionFlow
+        coEvery { chatManager.getConnection() } returns connectionFlow
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()
 
-        connectionFlow.emit(ConnectionState.Connection.Error("Falha"))
+        connectionFlow.emit(ConnectionStatus.FailedConnected("Falha"))
         runCurrent()
 
         val state = viewModel.state.value
@@ -117,7 +119,7 @@ class ChatViewModelTest {
         val conversationId = "123"
 
         coEvery { chatManager.getMessagesById(conversationId) } returns emptyFlow()
-        coEvery { chatManager.getConnectionStatus() } returns emptyFlow()
+        coEvery { chatManager.getConnection() } returns emptyFlow()
 
         viewModel.dispatcher(ChatIntent.Init(conversationId))
         runCurrent()

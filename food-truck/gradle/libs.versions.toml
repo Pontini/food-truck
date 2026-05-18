@@ -9,6 +9,7 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 kotlinxCoroutinesCore = "1.8.1"
+kotlinxCoroutinesCoreVersion = "1.7.3"
 kotlinxSerializationJson = "1.7.3"
 ktorClientContentNegotiation = "2.3.7"
 ktorClientOkhttp = "2.3.7"
@@ -56,6 +57,7 @@ koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", versi
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinCore" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxSerializationJson" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }
+kotlinx-coroutines-core-v173 = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCoreVersion" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxSerializationJson" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json" }
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation" }
