@@ -60,7 +60,6 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // 🍔 BOTÃO PEDIDO
             OptionButton(
                 text = "Fazer pedido",
                 color = Color(0xFF4CAF50),
