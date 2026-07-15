@@ -1,0 +1,23 @@
+<resources>
+    <!-- Shared connection status -->
+    <string name="status_online">Online</string>
+
+    <!-- ChatScreen -->
+    <string name="chat_message_placeholder">Digite uma mensagem...</string>
+    <string name="chat_send_button">Enviar</string>
+    <string name="chat_status_connecting">Conectando...</string>
+    <string name="chat_status_offline">Offline</string>
+
+    <!-- Avatar -->
+    <string name="avatar_me_label">Me</string>
+    <string name="avatar_initial_fallback">?</string>
+
+    <!-- ConnectionBanner (conversations) -->
+    <string name="connection_status_offline_cached">Dados offline</string>
+    <string name="connection_status_no_connection">Sem conexão</string>
+
+    <!-- ConversationsScreen -->
+    <string name="conversations_load_error">Ocorreu um erro</string>
+    <string name="conversations_empty_offline">Sem dados offline</string>
+    <string name="retry_button">Tentar novamente</string>
+</resources>

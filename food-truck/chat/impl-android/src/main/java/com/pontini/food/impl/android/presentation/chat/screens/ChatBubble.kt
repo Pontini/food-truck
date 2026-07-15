@@ -9,7 +9,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.food.truck.impl.android.R
 import com.pontini.food.features.domain.models.Message
 import com.pontini.food.features.domain.models.TypeMessage
 
@@ -55,7 +57,7 @@ fun ChatBubble(message: Message) {
 
         if (isMe) {
             Spacer(modifier = Modifier.width(6.dp))
-            Avatar("Me")
+            Avatar(stringResource(R.string.avatar_me_label))
         }
     }
 }

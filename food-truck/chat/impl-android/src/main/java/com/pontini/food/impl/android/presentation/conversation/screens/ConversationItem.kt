@@ -13,8 +13,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.food.truck.impl.android.R
 import com.pontini.food.domain.models.Conversation
 
 @Composable
@@ -43,7 +45,7 @@ fun ConversationItem(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = conversation.name.firstOrNull()?.uppercase() ?: "?",
+                text = conversation.name.firstOrNull()?.uppercase() ?: stringResource(R.string.avatar_initial_fallback),
                 color = Color.White
             )
         }

@@ -11,8 +11,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.food.truck.impl.android.R
 import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatIntent
 import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -102,7 +104,7 @@ fun ChatScreen(
                         value = text,
                         onValueChange = { text = it },
                         modifier = Modifier.weight(1f),
-                        placeholder = { Text("Digite uma mensagem...") },
+                        placeholder = { Text(stringResource(R.string.chat_message_placeholder)) },
                         shape = MaterialTheme.shapes.large
                     )
 
@@ -119,7 +121,7 @@ fun ChatScreen(
                         },
                         shape = MaterialTheme.shapes.large
                     ) {
-                        Text("Enviar")
+                        Text(stringResource(R.string.chat_send_button))
                     }
                 }
             }
@@ -133,9 +135,9 @@ fun ChatConnectionBanner(
     isConnecting: Boolean
 ) {
     val (text, color) = when {
-        isConnecting -> "Conectando..." to MaterialTheme.colorScheme.surfaceVariant
-        isConnected -> "Online" to MaterialTheme.colorScheme.primary
-        else -> "Offline" to MaterialTheme.colorScheme.error
+        isConnecting -> stringResource(R.string.chat_status_connecting) to MaterialTheme.colorScheme.surfaceVariant
+        isConnected -> stringResource(R.string.status_online) to MaterialTheme.colorScheme.primary
+        else -> stringResource(R.string.chat_status_offline) to MaterialTheme.colorScheme.error
     }
 
     Surface(

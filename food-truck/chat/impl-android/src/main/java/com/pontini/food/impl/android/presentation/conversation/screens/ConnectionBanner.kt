@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.food.truck.impl.android.R
 import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConnectionStatus
 
 @Composable
@@ -19,25 +21,25 @@ fun ConnectionBanner(status: ConnectionStatus) {
 
         is ConnectionStatus.Online -> Triple(
             Color(0xFF4CAF50),
-            "Online",
+            stringResource(R.string.status_online),
             Color.White
         )
 
         is ConnectionStatus.OfflineWithCache -> Triple(
             Color.LightGray,
-            "Dados offline",
+            stringResource(R.string.connection_status_offline_cached),
             Color.Black
         )
 
         is ConnectionStatus.OfflineNoData -> Triple(
             Color(0xFFF44336),
-            "Sem conexão",
+            stringResource(R.string.connection_status_no_connection),
             Color.White
         )
 
         ConnectionStatus.Connecting ->  Triple(
             Color(0xFFF44336),
-            "Sem conexão",
+            stringResource(R.string.connection_status_no_connection),
             Color.White
         )
     }

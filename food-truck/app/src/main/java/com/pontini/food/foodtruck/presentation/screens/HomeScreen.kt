@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.pontini.food.foodtruck.R
 
 @Composable
 fun HomeScreen(
@@ -45,7 +47,7 @@ fun HomeScreen(
         ) {
 
             Text(
-                text = "Food Truck",
+                text = stringResource(R.string.home_title),
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight.Bold
             )
@@ -53,7 +55,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Peça comida ou fale com a gente",
+                text = stringResource(R.string.home_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = Color.Gray
             )
@@ -61,16 +63,15 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             OptionButton(
-                text = "Fazer pedido",
+                text = stringResource(R.string.home_order_button),
                 color = Color(0xFF4CAF50),
                 onClick = onNavigateToOrder
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // 💬 BOTÃO CHAT
             OptionButton(
-                text = "Conversas",
+                text = stringResource(R.string.home_conversations_button),
                 color = Color(0xFF0D47A1),
                 onClick = onNavigateToConversations
             )

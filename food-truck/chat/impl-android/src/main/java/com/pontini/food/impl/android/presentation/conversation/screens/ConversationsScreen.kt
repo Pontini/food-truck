@@ -15,6 +15,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.food.truck.impl.android.R
 import com.pontini.food.domain.models.Conversation
 import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConversationsIntent
 import com.pontini.food.impl.android.presentation.conversation.viewmodel.ConversationsViewModel
@@ -44,7 +46,7 @@ fun ConversationsScreen(
 
                 state.error != null && state.conversations.isEmpty() -> {
                     ErrorView(
-                        message = state.error ?: "Ocorreu um erro",
+                        message = state.error ?: stringResource(R.string.conversations_load_error),
                         onRetry = {
                             viewModel.dispatcher(ConversationsIntent.Init)
                         }
@@ -53,7 +55,7 @@ fun ConversationsScreen(
 
                 state.conversations.isEmpty() -> {
                     Text(
-                        text = "Sem dados offline",
+                        text = stringResource(R.string.conversations_empty_offline),
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
@@ -93,7 +95,7 @@ fun ErrorView(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(text = message)
             Button(onClick = onRetry) {
-                Text("Tentar novamente")
+                Text(stringResource(R.string.retry_button))
             }
         }
     }
