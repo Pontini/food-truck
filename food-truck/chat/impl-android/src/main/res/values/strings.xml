@@ -1,4 +1,7 @@
 <resources>
+    <!-- Home entry point -->
+    <string name="chat_home_button">Conversas</string>
+
     <!-- Shared connection status -->
     <string name="status_online">Online</string>
 

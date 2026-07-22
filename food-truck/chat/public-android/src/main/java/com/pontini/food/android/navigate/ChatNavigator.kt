@@ -1,9 +1,9 @@
 package com.pontini.food.android.navigate
 
 import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
+import com.pontini.food.core.navigation.FeatureNavigator
 
-interface ChatNavigator {
+interface ChatNavigator : FeatureNavigator {
 
     fun openConversations(navController: NavController)
 
@@ -11,10 +11,5 @@ interface ChatNavigator {
         navController: NavController,
         conversationId: String,
         name: String
-    )
-
-    fun registerGraph(
-        navController: NavController,
-        navGraphBuilder: NavGraphBuilder
     )
 }

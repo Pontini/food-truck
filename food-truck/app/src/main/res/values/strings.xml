@@ -4,6 +4,4 @@
     <!-- HomeScreen -->
     <string name="home_title">Food Truck</string>
     <string name="home_subtitle">Peça comida ou fale com a gente</string>
-    <string name="home_order_button">Fazer pedido</string>
-    <string name="home_conversations_button">Conversas</string>
 </resources>

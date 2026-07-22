@@ -1,3 +1,4 @@
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,13 +18,28 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import com.pontini.food.foodtruck.R
+import com.pontini.food.foodtruck.presentation.themes.FoodTruckTheme
+import com.food.truck.impl.android.R as ChatR
+import com.pontini.food.delivery.impl.android.R as DeliveryR
+
+data class HomeAction(
+    @StringRes val titleRes: Int,
+    val onClick: () -> Unit
+)
+
+private val HOME_BUTTON_COLORS = listOf(
+    Color(0xFF4CAF50),
+    Color(0xFF0D47A1),
+    Color(0xFFFF6F00),
+    Color(0xFF6A1B9A)
+)
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onNavigateToConversations: () -> Unit,
-    onNavigateToOrder: () -> Unit
+    actions: List<HomeAction>
 ) {
 
     Box(
@@ -62,19 +78,15 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            OptionButton(
-                text = stringResource(R.string.home_order_button),
-                color = Color(0xFF4CAF50),
-                onClick = onNavigateToOrder
-            )
+            actions.forEachIndexed { index, action ->
+                OptionButton(
+                    text = stringResource(action.titleRes),
+                    color = HOME_BUTTON_COLORS[index % HOME_BUTTON_COLORS.size],
+                    onClick = action.onClick
+                )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OptionButton(
-                text = stringResource(R.string.home_conversations_button),
-                color = Color(0xFF0D47A1),
-                onClick = onNavigateToConversations
-            )
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }
@@ -98,5 +110,26 @@ fun OptionButton(
             style = MaterialTheme.typography.titleMedium,
             color = Color.White
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun HomeScreenPreview() {
+    FoodTruckTheme {
+        HomeScreen(
+            actions = listOf(
+                HomeAction(titleRes = DeliveryR.string.delivery_home_button) {},
+                HomeAction(titleRes = ChatR.string.chat_home_button) {}
+            )
+        )
+    }
+}
+
+@Preview(name = "Sem features registradas", showBackground = true)
+@Composable
+private fun HomeScreenEmptyPreview() {
+    FoodTruckTheme {
+        HomeScreen(actions = emptyList())
     }
 }

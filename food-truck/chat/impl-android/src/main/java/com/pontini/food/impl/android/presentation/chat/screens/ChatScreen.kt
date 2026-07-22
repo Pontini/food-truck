@@ -12,10 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.food.truck.impl.android.R
+import com.pontini.food.features.domain.models.Message
+import com.pontini.food.features.domain.models.TypeMessage
 import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatIntent
+import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatState
 import com.pontini.food.impl.android.presentation.chat.viewmodel.ChatViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -27,7 +33,6 @@ fun ChatScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
-    val listState = rememberLazyListState()
 
     LaunchedEffect(conversationId) {
         viewModel.dispatcher(ChatIntent.Init(conversationId))
@@ -38,6 +43,21 @@ fun ChatScreen(
             Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
         }
     }
+
+    ChatScreenContent(
+        name = name,
+        state = state,
+        onSendMessage = { text -> viewModel.dispatcher(ChatIntent.SendMessage(text)) }
+    )
+}
+
+@Composable
+fun ChatScreenContent(
+    name: String,
+    state: ChatState,
+    onSendMessage: (String) -> Unit
+) {
+    val listState = rememberLazyListState()
 
     LaunchedEffect(state.messages.size) {
         if (state.messages.isNotEmpty()) {
@@ -113,9 +133,7 @@ fun ChatScreen(
                     Button(
                         onClick = {
                             if (text.isNotBlank()) {
-                                viewModel.dispatcher(
-                                    ChatIntent.SendMessage(text)
-                                )
+                                onSendMessage(text)
                                 text = ""
                             }
                         },
@@ -149,6 +167,47 @@ fun ChatConnectionBanner(
             modifier = Modifier.padding(6.dp),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onPrimary
+        )
+    }
+}
+
+private val PREVIEW_MESSAGES = listOf(
+    Message(
+        id = "1",
+        conversationId = "1",
+        text = "Oi! Qual o horário de vocês hoje?",
+        senderName = "Cliente",
+        timestamp = System.currentTimeMillis(),
+        typeMessage = TypeMessage.RECEIVED
+    ),
+    Message(
+        id = "2",
+        conversationId = "1",
+        text = "Abrimos às 18h, te esperamos!",
+        senderName = "Me",
+        timestamp = System.currentTimeMillis(),
+        typeMessage = TypeMessage.SENT
+    )
+)
+
+private class ChatStatePreviewProvider : PreviewParameterProvider<ChatState> {
+    override val values = sequenceOf(
+        ChatState(messages = PREVIEW_MESSAGES, isConnected = true),
+        ChatState(isConnecting = true),
+        ChatState(messages = PREVIEW_MESSAGES, isConnected = false)
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChatScreenPreview(
+    @PreviewParameter(ChatStatePreviewProvider::class) state: ChatState
+) {
+    MaterialTheme {
+        ChatScreenContent(
+            name = "Food Truck do Zé",
+            state = state,
+            onSendMessage = {}
         )
     }
 }

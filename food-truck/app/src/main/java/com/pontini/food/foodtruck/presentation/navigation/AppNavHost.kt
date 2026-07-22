@@ -1,17 +1,18 @@
 package com.pontini.food.foodtruck.presentation.navigation
 
+import HomeAction
 import HomeScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.pontini.food.android.navigate.ChatNavigator
+import com.pontini.food.core.navigation.FeatureNavigator
 
 const val HOME_ROUTE = "home"
 
 @Composable
 fun AppNavHost(
-    chatNavigator: ChatNavigator
+    featureNavigators: List<FeatureNavigator>
 ) {
     val navController = rememberNavController()
 
@@ -22,13 +23,17 @@ fun AppNavHost(
 
         composable(HOME_ROUTE) {
             HomeScreen(
-                onNavigateToConversations = {
-                    chatNavigator.openConversations(navController)
-                },
-                onNavigateToOrder = {}
+                actions = featureNavigators.map { navigator ->
+                    HomeAction(
+                        titleRes = navigator.homeTitleRes,
+                        onClick = { navigator.openEntryPoint(navController) }
+                    )
+                }
             )
         }
 
-        chatNavigator.registerGraph(navController, this)
+        featureNavigators.forEach { navigator ->
+            navigator.registerGraph(navController, this)
+        }
     }
 }

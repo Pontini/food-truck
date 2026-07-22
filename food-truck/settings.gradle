@@ -22,9 +22,14 @@ dependencyResolutionManagement {
 rootProject.name = "FoodTruck"
 include(
         ":app",
+        ":core-navigation",
         ":chat:public",
         ":chat:public-android",
         ":chat:impl",
-        ":chat:impl-android"
+        ":chat:impl-android",
+        ":delivery:public",
+        ":delivery:public-android",
+        ":delivery:impl",
+        ":delivery:impl-android"
 )
 include ':truck-observability'

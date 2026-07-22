@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":chat:public-android"))
     implementation(project(":chat:impl"))
     implementation(project(":truck-observability"))
+    implementation(project(":core-navigation"))
 
     debugImplementation(libs.androidx.ui.tooling)
 

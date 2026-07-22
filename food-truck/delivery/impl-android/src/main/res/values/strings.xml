@@ -1,0 +1,19 @@
+<resources>
+    <!-- Home entry point -->
+    <string name="delivery_home_button">Pedir Comida</string>
+
+    <!-- MenuScreen -->
+    <string name="delivery_menu_title">Cardápio</string>
+    <string name="delivery_add_button">Adicionar</string>
+    <string name="delivery_checkout_button">Confirmar pedido</string>
+    <string name="delivery_cart_item_count">%1$d itens no carrinho</string>
+
+    <!-- OrderStatusScreen -->
+    <string name="delivery_order_confirmed_title">Pedido confirmado!</string>
+    <string name="delivery_order_id_label">Pedido #%1$s</string>
+    <string name="delivery_status_received">Recebido</string>
+    <string name="delivery_status_preparing">Preparando</string>
+    <string name="delivery_status_on_the_way">A caminho</string>
+    <string name="delivery_status_delivered">Entregue</string>
+    <string name="delivery_back_home_button">Voltar para o início</string>
+</resources>

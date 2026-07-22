@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.food.truck.impl.android.R
 import com.pontini.food.android.navigate.ChatNavigator
 import com.pontini.food.impl.android.presentation.chat.screens.ChatScreen
 import com.pontini.food.impl.android.presentation.conversation.screens.ConversationsScreen
@@ -16,6 +17,12 @@ private const val CHAT_ROUTE = "chat"
 private const val CHAT_WITH_ARGS = "chat/{conversationId}/{name}"
 
 class ChatNavigatorImpl : ChatNavigator {
+
+    override val homeTitleRes: Int = R.string.chat_home_button
+
+    override fun openEntryPoint(navController: NavController) {
+        openConversations(navController)
+    }
 
     override fun openChat(
         navController: NavController,
